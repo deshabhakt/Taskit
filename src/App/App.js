@@ -10,8 +10,8 @@ import Home from '../Pages/Home/Home'
 import About from '../Pages/About/About'
 import Tasks from '../Pages/Tasks/Tasks'
 import Contact from '../Pages/Contact/Contact'
-import SignIn from '../Pages/SignIn/SignIn'
-import SignUp from '../Pages/SignIn/SingUp'
+import SignIn from '../Pages/SignOn/SignIn'
+import SignUp from '../Pages/SignOn/SingUp'
 
 // importing user related API calls handlers
 

@@ -5,19 +5,19 @@ import './MenuBar.css'
 const MenuBar = ({ loginState, logoutHandler, userName }) => {
 	return (
 		<nav className="menu-bar">
-			<Link to="/" className="menu-bar-spans">
+			<Link to="/" className="menu-bar-link">
 				Home
 			</Link>
-			<Link to="/tasks" className="menu-bar-spans">
+			<Link to="/tasks" className="menu-bar-link">
 				Tasks
 			</Link>
-			<Link to="/about" className="menu-bar-spans">
+			<Link to="/about" className="menu-bar-link">
 				About
 			</Link>
-			<Link to="/contact" className="menu-bar-spans">
+			<Link to="/contact" className="menu-bar-link">
 				Contact
 			</Link>
-			<div className="menu-bar-spans menu-bar-log-in-span">
+			<div className="menu-bar-log-in-span">
 				<p className="user-name">
 					{userName !== undefined ? `Welcome ${userName}   |   ` : ''}
 				</p>

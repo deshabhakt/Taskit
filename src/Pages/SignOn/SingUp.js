@@ -9,9 +9,9 @@ import './SignIn.css'
 
 function SignUp() {
 	const [userData, setUserData] = useState({
-		name: 'Deshahbakt',
-		email: 'dgavali1@gmail.com',
-		password: 'DB@@2323@@db',
+		name: '',
+		email: '',
+		password: '',
 	})
 
 	const [isVerificationMailSent, setIsVerificationMailSent] = useState(false)

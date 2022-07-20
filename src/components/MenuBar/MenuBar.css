@@ -13,13 +13,17 @@
     z-index: 110;
 }
 
-.menu-bar-spans {
+.menu-bar-link {
     padding: 10px;
     color: white;
     font-size: 1rem;
     font-weight: bolder;
     margin-right: auto;
     text-decoration: none;
+}
+
+.menu-bar-link:hover {
+    color: rgb(37, 211, 159);
 }
 
 .menu-bar-log-in-span {
@@ -30,23 +34,29 @@
     align-items: center;
     justify-content: center;
     justify-content: space-around;
-    }
+    font-weight: bolder;
+}
 
-    .user-name {
-        flex: 4;
-        font-size: 1rem;
-        margin-top: 1rem;
-        padding: 2px;
-        text-align: right;
-    }
+.user-name {
+    flex: 4;
+    font-size: 1rem;
+    margin-top: 1rem;
+    padding: 2px;
+    text-align: right;
+    padding: 10px;
+    color: white;
+    font-size: 1rem;
+    margin-right: auto;
+    text-decoration: none;
+}
 
-    .logonhandler {
-        text-align: right;
-        text-decoration: none;
-        color: rgb(255, 255, 255);
-        }
+.logonhandler {
+    text-align: right;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
 
-        .logonhandler:hover {
-            color: rgb(37, 211, 159);
+.logonhandler:hover {
+    color: rgb(37, 211, 159);
 
 }
