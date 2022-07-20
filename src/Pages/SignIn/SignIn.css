@@ -1,0 +1,25 @@
+.sign-in-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.sign-in-buttons-div {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+
+
+.sign-in-div h1 {
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 1rem;
+    border: transparent;
+    background-color: bisque;
+    padding: 14px 25px;
+    border-radius: 5rem;
+    font-weight: bolder;
+}

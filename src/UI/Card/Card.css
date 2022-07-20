@@ -1,0 +1,20 @@
+.card-div {
+    height: max-content;
+    width: max-content;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: antiquewhite;
+    padding: 25px;
+    gap: 10px;
+}
+
+.card-div>label {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.card-div>input {
+    padding: 6px 8px;
+}

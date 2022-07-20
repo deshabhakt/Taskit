@@ -1,0 +1,59 @@
+.modal-main-div {
+    position: fixed;
+    display: flex;
+    z-index: 110;
+    margin-top: -4rem;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.backdrop {
+    flex: 1;
+    background-color: rgba(19, 10, 10, 0.525);
+    position: fixed;
+    width: inherit;
+    height: inherit;
+}
+
+.modal-main {
+    width: fit-content;
+    padding: 1rem;
+    font-size: 1rem;
+    height: fit-content;
+    border-radius: 1rem;
+    background-color: beige;
+    align-self: center;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10;
+}
+
+.modal-main label {
+    font-weight: bolder;
+    display: block;
+}
+
+.modal-main input {
+    font-size: 1rem;
+    padding: 5px;
+}
+
+.textarea-edit-modal {
+    font-size: 1rem;
+    height: 10rem;
+    padding: 5px;
+    width: 20rem;
+}
+
+.task-completed-button {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.task-completed-button button {
+    flex: 1;
+}
