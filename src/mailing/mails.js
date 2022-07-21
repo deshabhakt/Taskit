@@ -9,6 +9,7 @@ const verificationMail = (name, verificationLink) => {
 					<br />
 					click on below link to verify your email-address.
 				</p>
+				<h2>Regards,<br/>Team Task!t</h2>
 				<link>${verificationLink}</link>
 			</div>`,
 	}
@@ -20,8 +21,39 @@ const verificationSuccessMail = (name) => {
 		body: `<div>
 				<h1>Hey ${name},</h1>
 				<p>Your Mail has been verified successfully.</p>
+				<h2>Regards,<br/>Team Task!t</h2>
 			</div>`,
 	}
 }
 
-module.exports = { verificationMail, verificationSuccessMail }
+const resetPasswordVerificationMail = (name, verificationLink) => {
+	return {
+		subject: 'Reset Password',
+		body: `<div>
+				<h1>Hey ${name},</h1>
+				<p>To reset password click on below link</p>
+				<link>${verificationLink}</link>
+				<h2>Regards,<br/>Team Task!t</h2>
+			</div>`,
+	}
+}
+
+const passwordChangeMail = (name, loginLink) => {
+	return {
+		subject: 'Reset Password',
+		body: `<div>
+				<h1>Hey ${name},</h1>
+				<p>Your password has been reset successfully.<br/>login using below link
+				</p>
+				<link>${loginLink}</link>
+				<h2>Regards,<br/>Team Task!t</h2>
+			</div>`,
+	}
+}
+
+module.exports = {
+	verificationMail,
+	verificationSuccessMail,
+	resetPasswordVerificationMail,
+	passwordChangeMail,
+}

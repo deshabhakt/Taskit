@@ -53,8 +53,8 @@ const userSchema = new mongoose.Schema({
 			if (value.includes('password') == true) {
 				throw new Error('Very generic password! Try something new:)')
 			}
-			if (value.length <= 6) {
-				throw new Error('Password should be longer than 6 characters')
+			if (value.length <= 7) {
+				throw new Error('Password should be longer than 7 characters')
 			}
 		},
 	},
@@ -83,7 +83,8 @@ const userSchema = new mongoose.Schema({
 	},
 	verificationToken: {
 		type: String,
-		expireAfterSeconds: 600,
+		expire: 600,
+		default: '',
 	},
 })
 
@@ -99,8 +100,8 @@ userSchema.virtual('tasks', {
 userSchema.methods.toJSON = function () {
 	const user = this.toObject()
 
-	// delete user.password
-	// delete user.tokens
+	delete user.password
+	delete user.tokens
 	delete user.avatar
 
 	return user
@@ -123,13 +124,17 @@ userSchema.methods.generateAuthToken = async function () {
 userSchema.statics.findByCredentials = async (email, password) => {
 	const user = await User.findOne({ email })
 	if (!user) {
-		throw new Error('User not found')
+		throw {
+			userFound: false,
+		}
 	}
 
 	const isMatch = await bcrypt.compare(password, user.password)
 
 	if (!isMatch) {
-		throw new Error('Username or password incorrect')
+		throw {
+			creds: 'wrong',
+		}
 	}
 
 	return user
@@ -141,6 +146,7 @@ userSchema.pre('save', async function (next) {
 
 	// password will be modified when the user is created and when the user updates their password
 	if (user.isModified('password')) {
+		console.log('password modified so re-hashing')
 		user.password = await bcrypt.hash(user.password, 8)
 	}
 

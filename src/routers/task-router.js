@@ -37,11 +37,19 @@ taskRouter.post('/tasks', auth, async (req, res) => {
 
 		await newTask.save()
 		res.status(201).send({
+			errorMessage: undefined,
 			message: 'Task created successfylly',
-			data: newTask,
 		})
 	} catch (e) {
-		res.status(400).send(e)
+		res.send({
+			errorMessage: {
+				message: {
+					h1: 'Task not created',
+					p: '500 | Server Error',
+				},
+				error: e,
+			},
+		})
 	}
 })
 
@@ -56,10 +64,11 @@ _ -> for sorting in descending order (this is passed as -1 to database options)
 (no _) -> for sorting in asending order(this is passed as 1 to database options)
 */
 taskRouter.get('/tasks', auth, async (req, res) => {
+	console.log('tasks requested')
 	const match = {} // for filtering
 	if (req.query.completed) {
 		match.completed =
-			(req.query.completed === 'True' || req.query.completed === 'true')
+			req.query.completed === 'True' || req.query.completed === 'true'
 	}
 	const sort = {} // for paging and sorting
 	if (req.query.sortBy) {
@@ -84,12 +93,31 @@ taskRouter.get('/tasks', auth, async (req, res) => {
 		// // both the above lines work same
 
 		if (!data || data.length === 0) {
-			return res.status(200).send({ error: 'No tasks Found',tasks:[] })
+			return res.send({
+				errorMessage: {
+					message: {
+						h1: 'No Tasks Found',
+						p: 'Start adding by clicking on + button',
+					},
+				},
+				tasks: [],
+			})
 		}
 
-		res.send({tasks:data})
+		res.send({
+			errorMessage: undefined,
+			tasks: data,
+		})
 	} catch (e) {
-		res.status(500).send({ error: 'something went wrong' })
+		res.send({
+			errorMessage: {
+				message: {
+					h1: 'Something went wrong...',
+					p: '500 | Server Error',
+				},
+				error: e,
+			},
+		})
 	}
 })
 
@@ -99,11 +127,30 @@ taskRouter.get('/tasks/:id', auth, async (req, res) => {
 		const _id = req.params.id
 		const data = await Task.findOne({ _id, owner: req.user._id })
 		if (!data) {
-			return res.status(404).send({ error: 'Task not found' })
+			return res.send({
+				errorMessage: {
+					message: {
+						h1: 'Something went wrong',
+						p: '404 | NOT FOUND',
+					},
+				},
+				task: {},
+			})
 		}
-		res.status(302).send({ data })
+		res.send({
+			errorMessage: undefined,
+			task: data,
+		})
 	} catch (e) {
-		res.status(404).send(e)
+		res.send({
+			errorMessage: {
+				message: {
+					h1: 'Something went wrong',
+					p: '404 | NOT FOUND',
+				},
+				error: e,
+			},
+		})
 	}
 })
 
@@ -112,12 +159,26 @@ taskRouter.patch('/tasks/:id', auth, async (req, res) => {
 	const id = req.params.id
 	const changes = req.body.changes
 	const updates = Object.keys(changes)
-	const allowedUpdates = ['title', 'description', 'completed','lastModifiedOn']
+	const allowedUpdates = [
+		'title',
+		'description',
+		'completed',
+		'lastModifiedOn',
+	]
 
 	const isValid = updates.every((update) => allowedUpdates.includes(update))
 
 	if (!isValid) {
-		return res.status(400).send()
+		return res.send(
+			res.send({
+				errorMessage: {
+					message: {
+						h1: 'Invalid update',
+						p: '400 | Bad Request',
+					},
+				},
+			})
+		)
 	}
 	try {
 		// const task = await Task.findByIdAndUpdate(
@@ -133,7 +194,14 @@ taskRouter.patch('/tasks/:id', auth, async (req, res) => {
 			owner: req.user._id,
 		})
 		if (!task) {
-			return res.status(200).send({ message: 'Task not found',data:undefined })
+			return res.send({
+				errorMessage: {
+					message: {
+						h1: 'Task Not found',
+						p: '400 | Bad Request',
+					},
+				},
+			})
 		}
 
 		updates.forEach((update) => {
@@ -142,9 +210,20 @@ taskRouter.patch('/tasks/:id', auth, async (req, res) => {
 		// updates.lastModifiedOn = getDateTimeStamp()
 		await task.save()
 
-		res.send({message:'Task found',data:task})
+		res.send({
+			errorMessage: undefined,
+			data: task,
+		})
 	} catch (e) {
-		res.status(400).send(e)
+		res.send({
+			errorMessage: {
+				message: {
+					h1: 'Unable to update task',
+					p: '500 | Server Error',
+				},
+			},
+			error: e,
+		})
 	}
 })
 
@@ -159,45 +238,52 @@ taskRouter.delete('/tasks/:id', auth, async (req, res) => {
 		// console.log('task found',task)
 
 		if (!task) {
-			return res.status(200).send({ message: 'Task not found',data:undefined })
+			return res.send({ message: 'Task not found', data: undefined })
 		}
 
 		await task.remove()
 
 		res.send({
-			message: 'Task deleted successfully.',
+			errorMessage: undefined,
 			data: task,
 		})
 	} catch (e) {
-		res.status(400).send(e)
-	}
-})
-
-// dummy routes
-
-// dummytasks inserter
-taskRouter.post('/insertdummies', auth, async (req, res) => {
-	try {
-
-		const dummyTasks = []
-		for (let i = 0; i < 10; i++) {
-			dummyTasks.push({
-				title: 'This is task ' + (i + 1),
-				description: 'This is description for task ' + (i + 1),
-				completed: i % 2 === 0,
-				owner:req.user._id
-			})
-		}
-		
-		await Task.insertMany(dummyTasks)
-		res.status(201).send({
-			message: 'Tasks created successfylly',
-			data: dummyTasks,
+		res.send({
+			errorMessage: {
+				message: {
+					h1: 'Unable to update task',
+					p: '500 | Server Error',
+				},
+			},
+			error: e,
 		})
-	} catch (e) {
-		res.status(400).send(e)
 	}
 })
+
+// // dummy routes
+
+// // dummytasks inserter
+// taskRouter.post('/insertdummies', auth, async (req, res) => {
+// 	try {
+// 		const dummyTasks = []
+// 		for (let i = 0; i < 10; i++) {
+// 			dummyTasks.push({
+// 				title: 'This is task ' + (i + 1),
+// 				description: 'This is description for task ' + (i + 1),
+// 				completed: i % 2 === 0,
+// 				owner: req.user._id,
+// 			})
+// 		}
+
+// 		await Task.insertMany(dummyTasks)
+// 		res.status(201).send({
+// 			message: 'Tasks created successfylly',
+// 			data: dummyTasks,
+// 		})
+// 	} catch (e) {
+// 		res.send(e)
+// 	}
+// })
 
 
 
