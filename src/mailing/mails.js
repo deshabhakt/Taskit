@@ -9,8 +9,8 @@ const verificationMail = (name, verificationLink) => {
 					<br />
 					click on below link to verify your email-address.
 				</p>
-				<h2>Regards,<br/>Team Task!t</h2>
 				<link>${verificationLink}</link>
+				<h2>Regards,<br/>Team Task!t</h2>
 			</div>`,
 	}
 }
