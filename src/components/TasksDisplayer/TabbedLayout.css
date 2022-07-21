@@ -45,7 +45,6 @@
     .no-tasks-found-div {
         margin-top: 15rem;
         flex: 1;
-        align-items: center;
         justify-items: center;
         text-align: center;
         color: gray;

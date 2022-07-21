@@ -9,8 +9,7 @@ const createUser = async (payload) => {
 		})
 		return data
 	} catch (e) {
-		// console.log('error', e)
-		throw new Error({ error: e })
+		throw Object.assign(new Error(e))
 	}
 }
 

@@ -1,0 +1,23 @@
+.logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    object-fit: contain;
+    gap: 3px;
+    text-decoration: none;
+}
+
+.logo__h1 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bolder;
+    color: #000000;
+    text-decoration: none;
+    flex: 1;
+}
+
+.logo__img {
+    width: inherit;
+    text-decoration: none;
+    flex: 1;
+}

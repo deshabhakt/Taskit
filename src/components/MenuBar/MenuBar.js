@@ -1,13 +1,34 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+
+import Logo from '../../UI/Logo/Logo'
+
 import './MenuBar.css'
 
 const MenuBar = ({ loginState, logoutHandler, userName }) => {
+	const [logOnText, setLogOnText] = useState('Sign In/Up')
+
+	const location = useLocation()
+
+	useEffect(() => {
+		setLogOnText((prev) => {
+			const newText = location.pathname.slice(1)
+			if (newText === 'signin') {
+				return 'Sign Up'
+			} else if (newText === 'signup') {
+				return 'Sign In'
+			} else {
+				return 'Sign In/Up'
+			}
+		})
+	}, [location])
 	return (
 		<nav className="menu-bar">
-			<Link to="/" className="menu-bar-link">
-				Home
-			</Link>
+			<Logo
+				className="menu-bar-icon"
+				imgStyles={{ width: '2rem' }}
+				titleStyles={{ fontSize: '1rem', color: 'white' }}
+			/>
 			<Link to="/tasks" className="menu-bar-link">
 				Tasks
 			</Link>
@@ -18,11 +39,23 @@ const MenuBar = ({ loginState, logoutHandler, userName }) => {
 				Contact
 			</Link>
 			<div className="menu-bar-log-in-span">
-				<p className="user-name">
-					{userName !== undefined ? `Welcome ${userName}   |   ` : ''}
-				</p>
+				<p className="user-name">{userName && `Welcome ${userName}`}</p>
+				<div
+					style={
+						userName && {
+							borderLeft: '2px solid rgb(255, 255, 255)',
+							height: '1.3rem',
+						}
+					}
+				></div>
 				<Link
-					to="/signin"
+					to={
+						logOnText === 'Sign In'
+							? '/signin'
+							: logOnText === 'Sign Up'
+							? '/signup'
+							: '/signin'
+					}
 					className="logonhandler"
 					onClick={() => {
 						if (loginState) {
@@ -30,7 +63,7 @@ const MenuBar = ({ loginState, logoutHandler, userName }) => {
 						}
 					}}
 				>
-					{loginState ? 'Sign Out' : 'Sign In/Up'}
+					{loginState ? 'Sign Out' : logOnText}
 				</Link>
 			</div>
 		</nav>

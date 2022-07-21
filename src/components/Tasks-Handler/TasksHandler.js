@@ -9,7 +9,7 @@ import EditTaskModal from '../Modals/EditTaskModal'
 import CreateTaskModal from '../Modals/CreateTaskModal'
 
 import './TasksHandler.css'
-import fetchDataFromServer from '../API-CallHandler/Tasks-API/fetchTasks'
+import fetchTasks from '../API-CallHandler/Tasks-API/fetchTasks'
 import deleteTask from '../API-CallHandler/Tasks-API/deleteTask'
 import editTask from '../API-CallHandler/Tasks-API/editTask'
 import createTask from '../API-CallHandler/Tasks-API/createTask'
@@ -23,9 +23,20 @@ function TasksHandler({ token }) {
 	const [tasks, setTasks] = useState()
 
 	const [selectedTab, setSelectedTab] = useState('ongoing')
+	const [errorObject, setErrorObject] = useState({
+		h1: '',
+		p: '',
+	})
+
+	const [loadingState, setLoadingState] = useState(false)
 
 	const taskCreateHandler = (createdTask) => {
+		setLoadingState(true)
 		setIsCreateTask(false)
+		setErrorObject({
+			h1: '',
+			p: '',
+		})
 		if (createdTask === undefined) {
 			return
 		}
@@ -34,11 +45,14 @@ function TasksHandler({ token }) {
 			lastModifiedOn: getDateTimeStamp(),
 			createdOn: getDateTimeStamp(),
 		}
-		createTask(newTask, token).then(() => {
-			setTasks((prev) => {
-				return [{ ...newTask, _id: Math.random() }, ...prev]
+		// return
+		createTask(newTask, token)
+			.then((res) => {
+				fetchTasksHelper()
 			})
-		})
+			.catch((e) => {
+				console.log('logging in taskhandler error', e)
+			})
 	}
 
 	const selectedTabHandler = (tab) => {
@@ -58,23 +72,18 @@ function TasksHandler({ token }) {
 	}
 
 	const taskCompletionToggleHandler = (id, toggledState) => {
-		const newTimeStamp = getDateTimeStamp()
-		editTask({ _id: id, completed: toggledState }, token).then(() => {
-			const ele = tasks.filter((e, idx) => {
-				return e._id === id
+		setLoadingState(true)
+		editTask({ _id: id, completed: toggledState }, token)
+			.then((res) => {
+				fetchTasksHelper()
 			})
-			ele.completed = toggledState
-			ele.lastModifiedOn = newTimeStamp
-
-			setTasks((prev) => {
-				return prev.filter((e, idx) => {
-					return e._id !== id
-				})
+			.catch((e) => {
+				console.log(e)
 			})
-		})
 	}
 
 	const taskEditDoneHandler = (editedTask) => {
+		setLoadingState(true)
 		setToEdit(false)
 		if (editedTask === undefined) {
 			return
@@ -83,53 +92,57 @@ function TasksHandler({ token }) {
 
 		editTask(editedTask, token)
 			.then(() => {
-				const previousTask = tasks.filter((ele, idx) => {
-					return ele._id === editedTask._id
-				})[0]
-				if (previousTask.completed === editedTask.completed) {
-					setTasks((prev) => {
-						return prev.filter((ele) => {
-							return ele._id === editedTask._id ? editedTask : ele
-						})
-					})
-				} else {
-					setTasks((prev) => {
-						return prev.filter((ele) => {
-							return ele._id !== editedTask._id
-						})
-					})
-				}
+				fetchTasksHelper()
 			})
 			.catch((e) => console.log(e))
 	}
 
 	const deleteButtonClickHandler = (id) => {
+		setLoadingState(true)
 		deleteTask(id, token)
 			.then(() => {
-				setTasks((prev) => {
-					return prev.filter((ele, idx) => {
-						return ele._id !== id
-					})
-				})
+				fetchTasksHelper()
+				setLoadingState(false)
 			})
 			.catch((e) => {
 				console.log(e)
 			})
 	}
-	useEffect(() => {
-		fetchDataFromServer(selectedTab, token)
-			.then((res) => {
-				setTasks((prev) => {
-					return res.data.tasks
+	const tasksHandler = (tasks) => {
+		setTasks(tasks)
+	}
+	const fetchTasksHelper = async () => {
+		setLoadingState(true)
+		await fetchTasks(selectedTab, token).then((res) => {
+			setLoadingState(false)
+			console.log(res)
+			if (!res.data) {
+				return setErrorObject({
+					h1: 'Something went wrong',
+					p: '500 | Unable to connect to server',
 				})
-			})
-			.catch((e) => {
-				console.log(e)
-			})
-	}, [selectedTab, tasks, token])
+			}
+			if (res.data.errorMessage) {
+				setErrorObject({ ...res.data.errorMessage.message })
+				return tasksHandler([])
+			} else {
+				return tasksHandler(res.data.tasks)
+			}
+		})
+	}
+
+	useEffect(() => {
+		fetchTasksHelper()
+	}, [selectedTab, token])
 
 	return (
-		<div style={{ display: 'flex', flexDirection: 'column' }}>
+		<div
+			style={{
+				display: 'flex',
+				flexDirection: 'column',
+				marginTop: '4.5rem',
+			}}
+		>
 			<Tabs
 				selectedTabHandler={selectedTabHandler}
 				selectedTab={selectedTab}
@@ -163,6 +176,8 @@ function TasksHandler({ token }) {
 				editButtonClickHandler={editButtonClickHandler}
 				deleteButtonClickHandler={deleteButtonClickHandler}
 				taskCompletionToggleHandler={taskCompletionToggleHandler}
+				errorObject={errorObject}
+				loadingState={loadingState}
 			/>
 		</div>
 	)

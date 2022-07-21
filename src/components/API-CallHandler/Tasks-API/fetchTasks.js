@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { SERVER_URL, HEADERS, TOKENS } from '../config'
+import { SERVER_URL, HEADERS } from '../config'
 const fetchTasks = async (
 	isCompleted,
 	token = '',
@@ -16,14 +16,15 @@ const fetchTasks = async (
 		queryURL += '&limit=' + limit + '&skip' + skip
 	}
 	try {
-		const TOKEN = token === '' ? TOKENS.deshabhakt : token
-		const data = await axios.get(queryURL, {
-			headers: HEADERS(TOKEN),
+		const res = await axios.get(queryURL, {
+			headers: HEADERS(token),
 		})
-		return data
+		return res
 	} catch (e) {
-		console.log(e)
-		return undefined
+		return {
+			code: 500,
+			message: 'Unable to get data from server',
+		}
 	}
 }
 

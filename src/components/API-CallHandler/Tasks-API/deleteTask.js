@@ -1,13 +1,12 @@
 import axios from 'axios'
-import { SERVER_URL, HEADERS, TOKENS } from '../config'
+import { SERVER_URL, HEADERS } from '../config'
 
 const deleteTask = async (id, token = '') => {
 	const url = SERVER_URL + 'tasks/' + id
 	try {
-		const TOKEN = token === '' ? TOKENS.deshabhakt : token
 		const data = await axios.delete(url, {
 			headers: {
-				...HEADERS(TOKEN),
+				...HEADERS(token),
 			},
 			data: {},
 		})

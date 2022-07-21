@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { motion } from 'framer-motion'
 
@@ -12,15 +12,16 @@ import unCheckedImage from '../../../utils/images/unchecked.png'
 const TaskCard = ({
 	task,
 	index,
+	loadingStateHandler,
 	editButtonClickHandler,
 	deleteButtonClickHandler,
 	taskCompletionToggleHandler,
 }) => {
-	const [animation, setAnimation] = useState({
+	const animation = {
 		initialOpacity: 0,
 		animateOpacity: 1,
 		transitionDuration: index / 10,
-	})
+	}
 
 	return (
 		<motion.div
@@ -34,11 +35,10 @@ const TaskCard = ({
 			<div className="task-description">{task.description}</div>
 			<div className="task-footer-div">
 				<div className="task-timestamp">
-					<p>Last Modified: {task.lastModifiedOn}</p>
+					Last Modified: {task.lastModifiedOn}
 				</div>
 				<Buttons
 					task={task}
-					index={index}
 					editButtonClickHandler={editButtonClickHandler}
 					deleteButtonClickHandler={deleteButtonClickHandler}
 					taskCompletionToggleHandler={taskCompletionToggleHandler}
@@ -74,7 +74,6 @@ const Checkbox = ({ task, taskCompletionToggleHandler }) => {
 
 const Buttons = ({
 	task,
-	index,
 	editButtonClickHandler,
 	deleteButtonClickHandler,
 	taskCompletionToggleHandler,

@@ -6,7 +6,7 @@
     flex-direction: column;
     flex-wrap: wrap;
     background-color: antiquewhite;
-    padding: 25px;
+    padding: 25px 25px 15px;
     gap: 10px;
 }
 

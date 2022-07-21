@@ -12,13 +12,15 @@ import Tasks from '../Pages/Tasks/Tasks'
 import Contact from '../Pages/Contact/Contact'
 import SignIn from '../Pages/SignOn/SignIn'
 import SignUp from '../Pages/SignOn/SingUp'
+import { ForgotPassword } from '../Pages/SignOn/ForgotPassword'
+import ResetPassword from '../Pages/SignOn/ResetPassword'
 
 // importing user related API calls handlers
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false)
 	const [userName, setUserName] = useState(undefined)
-	const [isValidCreds, setIsValidCreds] = useState(null)
+	const [isValidCreds, setIsValidCreds] = useState(true)
 	const [authToken, setAuthToken] = useState('')
 
 	useEffect(() => {
@@ -63,7 +65,10 @@ function App() {
 					userName={userName}
 				/>
 				<Routes>
-					<Route path="/" element={<Home />} />
+					<Route
+						path="/"
+						element={<Home isLoggedIn={isLoggedIn} />}
+					/>
 					<Route path="/about" element={<About />} />
 					<Route path="/contact" element={<Contact />} />
 
@@ -95,6 +100,11 @@ function App() {
 							)
 						}
 					/>
+					<Route
+						path="/forgotpassword"
+						element={<ForgotPassword />}
+					/>
+					<Route path="/resetpassword" element={<ResetPassword />} />
 				</Routes>
 			</div>
 		</BrowserRouter>

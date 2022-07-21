@@ -1,23 +1,32 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+
+import Logo from '../../UI/Logo/Logo'
+
 import './Home.css'
 
-function Home() {
+function Home({ isLoggedIn }) {
 	return (
 		<div className="home">
-			<h1>Welcome To</h1>
+			<Logo imgStyles={{ maxWidth: '3rem' }} />
 			<h1>
-				<strong>To-Do list App</strong>
+				Welcome To
+				<strong> Task!t</strong>
 			</h1>
 			<h2>
 				Your{' '}
 				<em>
-					<stron>one-stop-shop</stron>
+					<strong>one-stop-shop</strong>
 				</em>{' '}
 				for managing your tasks
 			</h2>
 			<h2>
-				Start by Signing up <a href="/signup">here</a>
+				{!isLoggedIn ? (
+					<>
+						Start by Signing up <a href="/signup">here</a>
+					</>
+				) : (
+					''
+				)}
 			</h2>
 		</div>
 	)
