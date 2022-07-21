@@ -18,6 +18,10 @@ app.use(express.json())
 app.use(userRouter)
 app.use(taskRouter)
 
+app.get('/', (req, res) => {
+	res.send('<h1>Server for <strong>Task!t app</strong></h1>')
+})
+
 // configuring port for runing server
 const PORT = process.env.PORT
 // starting server on configured port
