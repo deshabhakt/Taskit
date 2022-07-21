@@ -51,7 +51,10 @@ function TasksHandler({ token }) {
 				fetchTasksHelper()
 			})
 			.catch((e) => {
-				console.log('logging in taskhandler error', e)
+				setErrorObject({
+					h1: 'Something went Wrong',
+					p: '',
+				})
 			})
 	}
 
@@ -78,7 +81,10 @@ function TasksHandler({ token }) {
 				fetchTasksHelper()
 			})
 			.catch((e) => {
-				console.log(e)
+				setErrorObject({
+					h1: 'Something went Wrong',
+					p: '',
+				})
 			})
 	}
 
@@ -94,7 +100,12 @@ function TasksHandler({ token }) {
 			.then(() => {
 				fetchTasksHelper()
 			})
-			.catch((e) => console.log(e))
+			.catch((e) => {
+				return setErrorObject({
+					h1: 'Something went Wrong',
+					p: '',
+				})
+			})
 	}
 
 	const deleteButtonClickHandler = (id) => {
@@ -105,7 +116,10 @@ function TasksHandler({ token }) {
 				setLoadingState(false)
 			})
 			.catch((e) => {
-				console.log(e)
+				setErrorObject({
+					h1: 'Something went Wrong',
+					p: '',
+				})
 			})
 	}
 	const tasksHandler = (tasks) => {
@@ -115,7 +129,7 @@ function TasksHandler({ token }) {
 		setLoadingState(true)
 		await fetchTasks(selectedTab, token).then((res) => {
 			setLoadingState(false)
-			console.log(res)
+			// console.log(res)
 			if (!res.data) {
 				return setErrorObject({
 					h1: 'Something went wrong',

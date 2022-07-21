@@ -41,7 +41,14 @@ const ForgotPassword = () => {
 							isError: false,
 						})
 					}
-					console.log('res', res.data.success, res.data.error)
+					// console.log('res', res.data.success, res.data.error)
+				}).catch((e) => {
+					console.log(e)
+					return setFeedBack({
+						h1: 'Something went wrong',
+						p: '',
+						isError: true,
+					})
 				})
 			}}
 		>

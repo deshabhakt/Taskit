@@ -8,10 +8,10 @@ const createTask = async (payload, token = '') => {
 				...HEADERS(token),
 			},
 		})
-		console.log(data)
+		// console.log(data)
 		return data
 	} catch (e) {
-		console.log('error', e)
+		// console.log('error', e)
 		throw new Error(e)
 	}
 }

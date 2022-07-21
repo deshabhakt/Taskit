@@ -26,7 +26,7 @@ const editTask = async (editedTask, token = '') => {
 		})
 		return data
 	} catch (e) {
-		console.log('error', e)
+		// console.log('error', e)
 		throw new Error(e)
 	}
 }

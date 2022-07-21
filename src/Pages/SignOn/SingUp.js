@@ -39,12 +39,10 @@ function SignUp() {
 	})
 
 	const onSubmitHandler = () => {
-		console.log(userData)
 		const mailRegEx = userData.email.match(
 			/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/
 		)
 		if (!mailRegEx) {
-			console.log('match found')
 			return setFeedBack({
 				h1: 'Seems like your email is not correct.',
 				p: 'Please re-check and submit again🫠',
@@ -61,7 +59,7 @@ function SignUp() {
 		createUser(userData)
 			.then((res) => {
 				setLoadingState(false)
-				console.log(res)
+				// console.log(res)
 				if (res.data.error.message) {
 					return setFeedBack({
 						p: res.data.error.message.p,

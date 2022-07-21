@@ -91,7 +91,7 @@ function ResetPassword() {
 			return navigate('/forgotpassword')
 		}
 		setQueryParams(params)
-		console.log(params)
+		// console.log(params)
 	}, [])
 
 	return (

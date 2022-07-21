@@ -36,7 +36,7 @@ function SignIn({ signInHandler, isValidCreds }) {
 		setFeedBack({ h1: '', p: '' })
 		loginUser(loginData)
 			.then((res) => {
-				console.log(res)
+				// console.log(res)
 				setLoadingState(false)
 				if (res.data.error.message) {
 					return setFeedBack({
@@ -55,9 +55,6 @@ function SignIn({ signInHandler, isValidCreds }) {
 					})
 					return
 				}
-
-				
-
 
 				signInHandler(authToken, userName)
 			})

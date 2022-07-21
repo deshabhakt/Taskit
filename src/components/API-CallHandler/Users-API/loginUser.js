@@ -9,8 +9,8 @@ const loginUser = async (payload) => {
 		})
 		return data
 	} catch (error) {
-		console.log('error', error)
-		throw new Error({ error })
+		// console.log('error', error)
+		return error
 	}
 }
 

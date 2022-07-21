@@ -9,7 +9,7 @@ const resetpassword = async (payload) => {
 		})
 		return data
 	} catch (error) {
-		console.log('error', error)
+		// console.log('error', error)
 	}
 }
 
@@ -21,7 +21,8 @@ const checkResetToken = async (payload) => {
 		})
 		return data
 	} catch (error) {
-		console.log('error', error)
+		// console.log('error', error)
+		return error
 	}
 }
 export { checkResetToken }
