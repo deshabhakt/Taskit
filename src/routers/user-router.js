@@ -118,26 +118,6 @@ userRouter.post('/users/forgotpassword', async (req, res) => {
 		}
 		const token = await user.generateAuthToken()
 
-		if (!user.verified) {
-			const verificationLink =
-				process.env.FRONTEND_URL +
-				`/verify?email=${user.email}&token=${token}`
-			const mail = verificationMail(user.name, verificationLink)
-			user.verificationToken = token
-			await user.save()
-			return sendMail(user.email, mail.subject, mail.body).then(() => {
-				res.send({
-					error: {
-						message: {
-							h1: 'Account Not Verified!',
-							p: 'Verification Link sent Again.<br/>Do check spam folder',
-						},
-						status: 400,
-					},
-					success: {},
-				})
-			})
-		}
 		const verificationLink =
 			process.env.URL +
 			`/reset-password-token-validation?email=${user.email}&token=${token}`
@@ -241,7 +221,9 @@ userRouter.patch('/resetpassword', async (req, res) => {
 				process.env.FRONTEND_URL + '/forgotpassword?resetToken=invalid'
 			)
 		}
-
+		if (!user.verified) {
+			user.verified = true
+		}
 		user.password = newPassword
 		await user.save()
 
@@ -305,7 +287,7 @@ userRouter.get('/verify', async (req, res) => {
 			await user.save()
 
 			return sendMail(user.email, mail.subject, mail.body).then(() => {
-				return res.send({
+				res.send({
 					error: {
 						message: {
 							h1: 'Verification Link Expired',

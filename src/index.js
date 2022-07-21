@@ -18,6 +18,16 @@ app.use(express.json())
 app.use(userRouter)
 app.use(taskRouter)
 
+app.use((req, res, next) => {
+	res.header('Access-Control-Allow-Origin', '*')
+	res.header(
+		'Access-Control-Allow-Headers',
+		'Origin,Content-Type,Authorization,Accept,'
+	)
+	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE')
+	next()
+})
+
 app.get('/', (req, res) => {
 	res.send('<h1>Server for <strong>Task!t app</strong></h1>')
 })
