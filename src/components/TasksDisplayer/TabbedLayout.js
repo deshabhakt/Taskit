@@ -45,10 +45,12 @@ const TabbedLayout = ({
 							/>
 						</div>
 					)}
-					<div className="no-tasks-found-div">
-						<h1>{errorObject.h1}</h1>
-						<p>{errorObject.p}</p>
-					</div>
+					{!loadingState && (
+						<div className="no-tasks-found-div">
+							<h1>{errorObject.h1}</h1>
+							<p>{errorObject.p}</p>
+						</div>
+					)}
 				</>
 			) : (
 				<h1 className="no-tasks-found-div">No Tasks Found</h1>
