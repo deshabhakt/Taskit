@@ -17,7 +17,7 @@
 
     .menu-bar-icon {
         margin-top: 1rem;
-        padding: 10px;
+        padding: 0.1rem;
         text-decoration: none;
 }
 
@@ -43,7 +43,6 @@
     justify-content: center;
     justify-content: space-around;
     font-weight: bolder;
-    gap: 10px;
 }
 
 .user-name {
