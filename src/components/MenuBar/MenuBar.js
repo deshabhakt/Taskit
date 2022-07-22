@@ -25,7 +25,7 @@ const MenuBar = ({ loginState, logoutHandler, userName }) => {
 	return (
 		<nav className="menu-bar">
 			<Logo
-				className="menu-bar-icon"
+				className="menubar-logo__menu-bar-icon"
 				imgStyles={{ width: '2rem' }}
 				titleStyles={{ fontSize: '1rem', color: 'white' }}
 			/>

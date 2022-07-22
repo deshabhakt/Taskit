@@ -48,9 +48,8 @@
     justify-content: flex-start;
     align-content: flex-start;
     align-items: flex-start;
-
-    min-height: 90vh;
-
+    margin-bottom: 3rem;
+    min-height: 95vh;
     }
 
     @media screen and (max-width:600px) {

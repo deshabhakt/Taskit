@@ -222,15 +222,13 @@ function TasksHandler({ token }) {
 				animate={{ rotate: '0deg' }}
 				transition={{ duration: 1 }}
 				whileHover={{
-					scale: 1.05,
+					scale: 1.1,
 				}}
 				className="add-note-btn"
 				onClick={() => {
 					setIsCreateTask(true)
 				}}
-			>
-				+
-			</motion.button>
+			>+</motion.button>
 			{isCreateTask && (
 				<CreateTaskModal taskCreateHandler={taskCreateHandler} />
 			)}
