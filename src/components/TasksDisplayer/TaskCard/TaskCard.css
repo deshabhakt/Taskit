@@ -14,6 +14,7 @@
     padding: 1rem;
     gap: 2px;
     overflow: hidden;
+    transition: 1s;
 }
 
 
@@ -72,4 +73,9 @@
 
 .buttons-div img:hover {
     scale: 1.4;
+}
+
+.item-exit-active{
+    opacity: 0;
+  transition: opacity 700ms ease-out;
 }

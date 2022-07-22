@@ -48,18 +48,10 @@ function TasksHandler({ token }) {
 			createdOn: getDateTimeStamp(),
 		}
 
-		setTasks((prev) => {
-			return {
-				...prev,
-				[selectedTab]: [
-					{ _id: Math.random(), ...newTask },
-					...prev[selectedTab],
-				],
-			}
-		})
-
 		// API call for storing task in database
-		createTask(newTask, token).catch((e) => {
+		createTask(newTask, token).then(()=>{
+			fetchTasksHelper()
+		}).catch((e) => {
 			setErrorObject({
 				h1: 'Something went Wrong',
 				p: '',
@@ -93,7 +85,8 @@ function TasksHandler({ token }) {
 			const toggledTask = prev[selectedTab].filter((ele, idx) => {
 				return ele._id === id
 			})[0]
-			console.log('toggled task', toggledTask)
+			toggledTask.completed = toggledState
+			// console.log('toggled task', toggledTask)
 			const selecteTabTasks = prev[selectedTab].filter(
 				(ele) => ele._id !== id
 			)
@@ -121,9 +114,17 @@ function TasksHandler({ token }) {
 				}
 				return element
 			})
+			if (prev) {
+
+				return {
+					...prev,
+					[selectedTab]: [editedTask, ...filteredTasks],
+				}
+			}
+			const nonSelectedTab = selectedTab === 'ongoing' ? 'ongoing' : 'complete'
 			return {
-				...prev,
 				[selectedTab]: [editedTask, ...filteredTasks],
+				[nonSelectedTab]: []
 			}
 		})
 
@@ -137,18 +138,24 @@ function TasksHandler({ token }) {
 	}
 
 	const deleteButtonClickHandler = (id) => {
-		//
-
-		// API call for deleting task from database
+		// handling deletion for frontend
 		setTasks((prev) => {
-			return prev[selectedTab].filter((ele) => ele._id !== id)
+			return {
+				...prev,
+				[selectedTab]: prev[selectedTab].filter((ele) => ele._id !== id)
+			}
 		})
+		// API call for deleting task from database
 		deleteTask(id, token).catch((e) => {
+			// console.log(e)
 			setErrorObject({
 				h1: 'Something went Wrong',
 				p: '',
 			})
 		})
+
+
+
 	}
 	const tasksHandler = (tasks) => {
 		setTasks(tasks)
@@ -196,7 +203,7 @@ function TasksHandler({ token }) {
 
 	useEffect(() => {
 		fetchTasksHelper()
-	}, [token])
+	}, [token, selectedTab])
 
 	return (
 		<div

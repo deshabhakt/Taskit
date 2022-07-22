@@ -29,14 +29,17 @@ const TaskCard = ({
 			transition={{ duration: animation.transitionDuration }}
 			className="task"
 		>
-			<div className="task-title">{task.title}</div>
+			<div className="task-title" onClick={() => {
+					editButtonClickHandler(task._id)
+				}}>{task.title}</div>
 			<hr style={{ margin: '4px 0px' }} />
-			<div className="task-description">{task.description}</div>
+			<div className="task-description" onClick={() => {
+					editButtonClickHandler(task._id)
+				}}>{task.description}</div>
 			<div className="task-footer-div">
-				<div className="task-timestamp">
-					{/* <p> */}
+				<div className="task-timestamp"
+				>
 					Last Modified: {task.lastModifiedOn}
-					{/* </p> */}
 				</div>
 				<Buttons
 					task={task}
@@ -70,6 +73,7 @@ const Checkbox = ({ task, taskCompletionToggleHandler }) => {
 				/>
 			)}
 		</>
+
 	)
 }
 

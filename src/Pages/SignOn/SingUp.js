@@ -132,7 +132,7 @@ function SignUp() {
 					minLength={8}
 				/>
 				<div className="sign-in-buttons-div">
-					<Button type={'submit'} className={'btn btn-primary'}>
+					<Button type={'submit'} className={'btn btn-primary '}>
 						Sign Up
 					</Button>
 				</div>

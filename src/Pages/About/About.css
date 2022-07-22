@@ -1,0 +1,47 @@
+.about{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:0.7rem;
+}
+
+.about__app-logo{
+    margin-bottom: 1.5%;
+}
+
+.about__app-info{
+    flex:1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    }
+
+.about__app-info-description{
+    word-break: keep-all;
+    font-size: 1.2rem;
+    font-family: cursive;
+    width: 35rem;
+    padding:10px;
+}
+
+@media screen and (max-width:900px) {
+    .about{
+        margin-top:7rem;
+
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap:5rem;
+    }
+    .about__app-info-description,.about__dev-info{
+        width: 100vw;
+        padding:20px;
+    }
+    
+}
+

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import Logo from '../../UI/Logo/Logo'
 import Card from '../../UI/Card/Card'
@@ -22,6 +22,8 @@ function SignIn({ signInHandler }) {
 		p: '',
 		isError: '',
 	})
+
+	const navigate = useNavigate()
 
 	const setloginDataHelper = (event) => {
 		const targetName = event.target.name
@@ -102,12 +104,14 @@ function SignIn({ signInHandler }) {
 					autoFocus
 				/>
 				<div className="sign-in-buttons-div">
-					<Link
-						className="button-wrapper btn btn-primary"
-						to="/signup"
+					<Button
+						className="btn btn-primary"
+						onClickHandler={()=>{
+							navigate("/signup",{replace:true})
+						}}
 					>
 						Sing Up
-					</Link>
+					</Button>
 					<Button className="btn btn-success" type={'submit'}>
 						Sign In
 					</Button>

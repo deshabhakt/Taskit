@@ -1,11 +1,8 @@
 .button-wrapper {
-    width: max-content;
-    height: max-content;
-    max-width: inherit;
     border: 0px;
     border-radius: 1rem;
-    padding: 12px 18px;
     flex:1;
     font-weight: bolder;
-    margin:0.2rem 0rem 0.2rem;
+    width: max-content;
+    padding: 8px 2px;
 }

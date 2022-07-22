@@ -1,17 +1,17 @@
 import React from 'react'
+import Button from '../../UI/Button/Button'
 
-import githubLogo from '../../utils/images/github-logo.png'
-import linkedInLogo from '../../utils/images/linkedin-logo.png'
-import facebookLogo from '../../utils/images/facebook-logo.png'
+import Card from '../../UI/Card/Card'
 
 import './Contact.css'
-import Card from '../../UI/Card/Card'
 
 function Contact() {
 	return (
 		<div className="main-content contact__main-div">
-				<form className="contact__form">
-					<Card>
+			<p className='contact__description'>Anything to add or comment?<br /> Do reach out by filling feedback form and I will get back to you as soon as possible</p>
+			<form className="contact__form">
+				<h1>Feedback Form</h1>
+				<Card className={'contact__card'}>
 					<label>Name</label>
 					<input type="text" name="name" />
 					<label>Email</label>
@@ -23,8 +23,11 @@ function Contact() {
 						rows={5}
 						cols={30}
 					/>
-					</Card>
-				</form>
+					<div className='contact__submit-button-div'>
+						<Button type={'submit'} className='btn btn-success'>Submit</Button>
+					</div>
+				</Card>
+			</form>
 		</div>
 	)
 }
