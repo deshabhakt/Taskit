@@ -6,7 +6,7 @@ import './Contact.css'
 
 function Contact() {
 	return (
-		<div>
+		<div className="main-content ">
 			<Navigate to="/about" replace={true} />
 			<h1>Contact</h1>
 		</div>

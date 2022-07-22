@@ -12,7 +12,6 @@ import unCheckedImage from '../../../utils/images/unchecked.png'
 const TaskCard = ({
 	task,
 	index,
-	loadingStateHandler,
 	editButtonClickHandler,
 	deleteButtonClickHandler,
 	taskCompletionToggleHandler,
@@ -35,7 +34,9 @@ const TaskCard = ({
 			<div className="task-description">{task.description}</div>
 			<div className="task-footer-div">
 				<div className="task-timestamp">
+					{/* <p> */}
 					Last Modified: {task.lastModifiedOn}
+					{/* </p> */}
 				</div>
 				<Buttons
 					task={task}
@@ -52,21 +53,21 @@ const Checkbox = ({ task, taskCompletionToggleHandler }) => {
 	return (
 		<>
 			{task.completed ? (
-				<span
+				<img
 					onClick={() => {
 						taskCompletionToggleHandler(task._id, false)
 					}}
-				>
-					<img src={checkedImage} alt="checked-button" />
-				</span>
+					src={checkedImage}
+					alt="checked-button"
+				/>
 			) : (
-				<span
+				<img
 					onClick={() => {
 						taskCompletionToggleHandler(task._id, true)
 					}}
-				>
-					<img src={unCheckedImage} alt="un-checked-button" />
-				</span>
+					src={unCheckedImage}
+					alt="un-checked-button"
+				/>
 			)}
 		</>
 	)
@@ -80,27 +81,25 @@ const Buttons = ({
 }) => {
 	return (
 		<div className="buttons-div">
-			<span>
-				<Checkbox
-					task={task}
-					taskCompletionToggleHandler={taskCompletionToggleHandler}
-				/>
-			</span>
-			<span
+			<Checkbox
+				task={task}
+				taskCompletionToggleHandler={taskCompletionToggleHandler}
+			/>
+			<img
 				onClick={() => {
 					editButtonClickHandler(task._id)
 				}}
-			>
-				<img src={editImage} alt="edit-button" />
-			</span>
+				src={editImage}
+				alt="edit-button"
+			/>
 
-			<span
+			<img
 				onClick={() => {
 					deleteButtonClickHandler(task._id)
 				}}
-			>
-				<img src={deleteImage} alt="delete-button" />
-			</span>
+				src={deleteImage}
+				alt="delete-button"
+			/>
 		</div>
 	)
 }

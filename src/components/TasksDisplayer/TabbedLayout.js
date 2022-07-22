@@ -15,7 +15,9 @@ const TabbedLayout = ({
 }) => {
 	return (
 		<>
-			{tasksList !== undefined && tasksList.length > 0 ? (
+			{tasksList !== undefined &&
+			tasksList.length > 0 &&
+			!loadingState ? (
 				<div className="tabbed-layout">
 					{tasksList.map((task, index) => {
 						return (
@@ -34,7 +36,7 @@ const TabbedLayout = ({
 						)
 					})}
 				</div>
-			) : errorObject ? (
+			) : (
 				<>
 					{loadingState && (
 						<div className="no-tasks-found-div">
@@ -45,15 +47,13 @@ const TabbedLayout = ({
 							/>
 						</div>
 					)}
-					{!loadingState && (
+					{!loadingState && errorObject.h1 !== '' && (
 						<div className="no-tasks-found-div">
 							<h1>{errorObject.h1}</h1>
 							<p>{errorObject.p}</p>
 						</div>
 					)}
 				</>
-			) : (
-				<h1 className="no-tasks-found-div">No Tasks Found</h1>
 			)}
 		</>
 	)

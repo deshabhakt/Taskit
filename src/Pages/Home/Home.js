@@ -6,7 +6,7 @@ import './Home.css'
 
 function Home({ isLoggedIn }) {
 	return (
-		<div className="home">
+		<div className="main-content home">
 			<Logo imgStyles={{ maxWidth: '3rem' }} />
 			<h1>
 				Welcome To

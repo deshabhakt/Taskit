@@ -70,7 +70,7 @@ function SignIn({ signInHandler, isValidCreds }) {
 
 	return (
 		<form
-			className="main-content sign-in-form"
+			className="main-content"
 			onSubmit={(event) => {
 				loginHandler(event)
 			}}

@@ -7,7 +7,7 @@ import facebookLogo from '../../utils/images/facebook-logo.png'
 
 function About() {
 	return (
-		<div className="about">
+		<div className="main-content about">
 			<h1>Find Me Here</h1>
 			<div className="socials">
 				<a href="https://github.com/deshabhakt">

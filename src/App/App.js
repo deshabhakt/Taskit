@@ -14,6 +14,7 @@ import SignIn from '../Pages/SignOn/SignIn'
 import SignUp from '../Pages/SignOn/SingUp'
 import { ForgotPassword } from '../Pages/SignOn/ForgotPassword'
 import ResetPassword from '../Pages/SignOn/ResetPassword'
+import Footer from './Footer'
 
 // importing user related API calls handlers
 
@@ -58,55 +59,48 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			<div className="App">
-				<MenuBar
-					loginState={isLoggedIn}
-					logoutHandler={logoutHandler}
-					userName={userName}
+			<MenuBar
+				loginState={isLoggedIn}
+				logoutHandler={logoutHandler}
+				userName={userName}
+			/>
+
+			<Routes>
+				<Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
+				<Route path="/about" element={<About />} />
+				<Route path="/contact" element={<Contact />} />
+
+				<Route
+					path="/signin"
+					element={
+						isLoggedIn ? (
+							<Navigate to="/tasks" replace={true} />
+						) : (
+							<SignIn
+								signInHandler={singInHandler}
+								isValidCreds={isValidCreds}
+							/>
+						)
+					}
 				/>
-				<Routes>
-					<Route
-						path="/"
-						element={<Home isLoggedIn={isLoggedIn} />}
-					/>
-					<Route path="/about" element={<About />} />
-					<Route path="/contact" element={<Contact />} />
 
-					<Route
-						path="/signin"
-						element={
-							isLoggedIn ? (
-								<Navigate to="/tasks" replace={true} />
-							) : (
-								<SignIn
-									signInHandler={singInHandler}
-									isValidCreds={isValidCreds}
-								/>
-							)
-						}
-					/>
+				{!isLoggedIn && <Route path="/signup" element={<SignUp />} />}
 
-					{!isLoggedIn && (
-						<Route path="/signup" element={<SignUp />} />
-					)}
+				<Route
+					path="/tasks"
+					element={
+						!isLoggedIn ? (
+							<Navigate to="/signin" replace={true} />
+						) : (
+							<Tasks token={authToken} />
+						)
+					}
+				/>
+				<Route path="/forgotpassword" element={<ForgotPassword />} />
+				<Route path="/resetpassword" element={<ResetPassword />} />
+			</Routes>
 
-					<Route
-						path="/tasks"
-						element={
-							!isLoggedIn ? (
-								<Navigate to="/signin" replace={true} />
-							) : (
-								<Tasks token={authToken} />
-							)
-						}
-					/>
-					<Route
-						path="/forgotpassword"
-						element={<ForgotPassword />}
-					/>
-					<Route path="/resetpassword" element={<ResetPassword />} />
-				</Routes>
-			</div>
+			<Footer />
 		</BrowserRouter>
 	)
 }

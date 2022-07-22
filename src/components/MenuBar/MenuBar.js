@@ -40,14 +40,7 @@ const MenuBar = ({ loginState, logoutHandler, userName }) => {
 			</Link>
 			<div className="menu-bar-log-in-span">
 				<p className="user-name">{userName && `Welcome ${userName}`}</p>
-				<div
-					style={
-						userName && {
-							borderLeft: '2px solid rgb(255, 255, 255)',
-							height: '1.3rem',
-						}
-					}
-				></div>
+				<div className={userName && 'username-separator-div'}></div>
 				<Link
 					to={
 						logOnText === 'Sign In'

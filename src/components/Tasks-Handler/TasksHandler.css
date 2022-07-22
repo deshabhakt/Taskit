@@ -9,8 +9,8 @@
     color: rgb(251, 255, 0);
     background-color: rgb(33, 136, 34);
     align-self: flex-end;
-    margin-right: 2vw;
-    margin-top: 82vh;
+    margin-top: 93vh;
+    margin-right: 3vw;
 }
 
 .add-note-btn:hover {
@@ -24,12 +24,12 @@
 
 @media screen and (max-width:800px) {
     .add-note-btn {
-        margin-left: 85vw;
+        margin-left: 83vw;
     }
 }
 
 @media screen and (max-height:900px) {
     .add-note-btn {
-        margin-top: 83vh;
+        margin-top: 80vh;
     }
 }

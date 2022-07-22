@@ -16,11 +16,14 @@ import createTask from '../API-CallHandler/Tasks-API/createTask'
 
 function TasksHandler({ token }) {
 	const [toEdit, setToEdit] = useState(false)
-	const [taskToBeEdited, setTaskToBeEdited] = useState({})
+	const [taskToBeEdited, setTaskToBeEdited] = useState()
 
 	const [isCreateTask, setIsCreateTask] = useState(false)
 
-	const [tasks, setTasks] = useState()
+	const [tasks, setTasks] = useState({
+		complete: [],
+		ongoing: [],
+	})
 
 	const [selectedTab, setSelectedTab] = useState('ongoing')
 	const [errorObject, setErrorObject] = useState({
@@ -31,7 +34,6 @@ function TasksHandler({ token }) {
 	const [loadingState, setLoadingState] = useState(false)
 
 	const taskCreateHandler = (createdTask) => {
-		setLoadingState(true)
 		setIsCreateTask(false)
 		setErrorObject({
 			h1: '',
@@ -45,17 +47,24 @@ function TasksHandler({ token }) {
 			lastModifiedOn: getDateTimeStamp(),
 			createdOn: getDateTimeStamp(),
 		}
-		// return
-		createTask(newTask, token)
-			.then((res) => {
-				fetchTasksHelper()
+
+		setTasks((prev) => {
+			return {
+				...prev,
+				[selectedTab]: [
+					{ _id: Math.random(), ...newTask },
+					...prev[selectedTab],
+				],
+			}
+		})
+
+		// API call for storing task in database
+		createTask(newTask, token).catch((e) => {
+			setErrorObject({
+				h1: 'Something went Wrong',
+				p: '',
 			})
-			.catch((e) => {
-				setErrorObject({
-					h1: 'Something went Wrong',
-					p: '',
-				})
-			})
+		})
 	}
 
 	const selectedTabHandler = (tab) => {
@@ -68,59 +77,78 @@ function TasksHandler({ token }) {
 
 	const editButtonClickHandler = (id) => {
 		setToEdit(true)
-		const taskData = tasks.filter((ele, idx) => {
+		const taskData = tasks[selectedTab].filter((ele, idx) => {
 			return ele._id === id
 		})[0]
-		setTaskToBeEdited({ taskData })
+		setTaskToBeEdited(taskData)
 	}
 
 	const taskCompletionToggleHandler = (id, toggledState) => {
-		setLoadingState(true)
+		// API call to update the task in database
 		editTask({ _id: id, completed: toggledState }, token)
-			.then((res) => {
-				fetchTasksHelper()
-			})
-			.catch((e) => {
-				setErrorObject({
-					h1: 'Something went Wrong',
-					p: '',
-				})
-			})
+		// handling frontend updation
+		const nonSelectedTab =
+			selectedTab === 'ongoing' ? 'complete' : 'ongoing'
+		setTasks((prev) => {
+			const toggledTask = prev[selectedTab].filter((ele, idx) => {
+				return ele._id === id
+			})[0]
+			console.log('toggled task', toggledTask)
+			const selecteTabTasks = prev[selectedTab].filter(
+				(ele) => ele._id !== id
+			)
+
+			const nonSelectedTabTasks = [toggledTask, ...prev[nonSelectedTab]]
+			return {
+				[selectedTab]: selecteTabTasks,
+				[nonSelectedTab]: nonSelectedTabTasks,
+			}
+		})
 	}
 
 	const taskEditDoneHandler = (editedTask) => {
-		setLoadingState(true)
 		setToEdit(false)
 		if (editedTask === undefined) {
 			return
 		}
 		editedTask.lastModifiedOn = getDateTimeStamp()
 
-		editTask(editedTask, token)
-			.then(() => {
-				fetchTasksHelper()
+		// handling frontend updation
+		setTasks((prev) => {
+			const filteredTasks = prev[selectedTab].filter((element, index) => {
+				if (element._id === editedTask._id) {
+					return false
+				}
+				return element
 			})
-			.catch((e) => {
-				return setErrorObject({
-					h1: 'Something went Wrong',
-					p: '',
-				})
+			return {
+				...prev,
+				[selectedTab]: [editedTask, ...filteredTasks],
+			}
+		})
+
+		// API call to update the task in database
+		editTask(editedTask, token).catch((e) => {
+			return setErrorObject({
+				h1: 'Something went wrong',
+				p: 'Try refreshing...',
 			})
+		})
 	}
 
 	const deleteButtonClickHandler = (id) => {
-		setLoadingState(true)
-		deleteTask(id, token)
-			.then(() => {
-				fetchTasksHelper()
-				setLoadingState(false)
+		//
+
+		// API call for deleting task from database
+		setTasks((prev) => {
+			return prev[selectedTab].filter((ele) => ele._id !== id)
+		})
+		deleteTask(id, token).catch((e) => {
+			setErrorObject({
+				h1: 'Something went Wrong',
+				p: '',
 			})
-			.catch((e) => {
-				setErrorObject({
-					h1: 'Something went Wrong',
-					p: '',
-				})
-			})
+		})
 	}
 	const tasksHandler = (tasks) => {
 		setTasks(tasks)
@@ -140,21 +168,42 @@ function TasksHandler({ token }) {
 				setErrorObject({ ...res.data.errorMessage.message })
 				return tasksHandler([])
 			} else {
-				return tasksHandler(res.data.tasks)
+				const fetchedTasks = res.data.tasks
+				const ongoing = fetchedTasks.filter((ele, idx) => {
+					return ele.completed === false
+				})
+				const complete = fetchedTasks.filter((ele, idx) => {
+					return ele.completed === true
+				})
+				setTasks({ ongoing, complete })
 			}
 		})
 	}
+	useEffect(() => {
+		if (
+			!tasks.complete ||
+			!tasks.ongoing ||
+			tasks.complete.length === 0 ||
+			tasks.ongoing.length === 0
+		) {
+			setErrorObject({
+				h1: 'No tasks found',
+				p: 'Start adding by clicking on + button',
+				isError: false,
+			})
+		}
+	}, [tasks, selectedTab])
 
 	useEffect(() => {
 		fetchTasksHelper()
-	}, [selectedTab, token])
+	}, [token])
 
 	return (
 		<div
+			className="main-content"
 			style={{
 				display: 'flex',
 				flexDirection: 'column',
-				marginTop: '4.5rem',
 			}}
 		>
 			<Tabs
@@ -186,7 +235,9 @@ function TasksHandler({ token }) {
 				/>
 			)}
 			<TabbedLayout
-				tasksList={tasks}
+				tasksList={
+					selectedTab === 'ongoing' ? tasks.ongoing : tasks.complete
+				}
 				editButtonClickHandler={editButtonClickHandler}
 				deleteButtonClickHandler={deleteButtonClickHandler}
 				taskCompletionToggleHandler={taskCompletionToggleHandler}

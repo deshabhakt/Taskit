@@ -85,7 +85,7 @@ function SignUp() {
 
 	return (
 		<form
-			className="sign-in-form"
+			className="main-content sign-in-form"
 			onSubmit={(event) => {
 				event.preventDefault()
 				onSubmitHandler()

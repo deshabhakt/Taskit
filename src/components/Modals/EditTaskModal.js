@@ -3,7 +3,7 @@ import Button from '../../UI/Button/Button'
 import ModalHoder from './ModalHolder'
 
 const EditTaskModal = ({ taskToBeEdited, taskEditDoneHandler }) => {
-	const [task, setTask] = useState(taskToBeEdited.taskData)
+	const [task, setTask] = useState(taskToBeEdited)
 	const [taskCompleted, setTaskCompleted] = useState(task.completed)
 
 	const taskEditHandler = (e) => {

@@ -19,39 +19,41 @@ const ForgotPassword = () => {
 		p: '',
 		isError: false,
 	})
-	return (
-		<form
-			className="sign-in-form"
-			onSubmit={(event) => {
-				event.preventDefault()
-				setLoadingState(true)
-				forgotPassword({ email }).then((res) => {
-					setLoadingState(false)
-					if (res.data.error.message) {
-						return setFeedBack({
-							h1: res.data.error.message.h1,
-							p: res.data.error.message.p,
-							isError: true,
-						})
-					}
-					if (res.data.success) {
-						setFeedBack({
-							h1: res.data.success.message.h1,
-							p: res.data.success.message.p,
-							isError: false,
-						})
-					}
-					// console.log('res', res.data.success, res.data.error)
-				}).catch((e) => {
-					console.log(e)
+
+	const onSubmitHandler = (event) => {
+		event.preventDefault()
+		setLoadingState(true)
+		forgotPassword({ email })
+			.then((res) => {
+				setLoadingState(false)
+				if (res.data.error.message) {
 					return setFeedBack({
-						h1: 'Something went wrong',
-						p: '',
+						h1: res.data.error.message.h1,
+						p: res.data.error.message.p,
 						isError: true,
 					})
+				}
+				if (res.data.success) {
+					setFeedBack({
+						h1: res.data.success.message.h1,
+						p: res.data.success.message.p,
+						isError: false,
+					})
+				}
+				// console.log('res', res.data.success, res.data.error)
+			})
+			.catch((e) => {
+				console.log(e)
+				return setFeedBack({
+					h1: 'Something went wrong',
+					p: '',
+					isError: true,
 				})
-			}}
-		>
+			})
+	}
+
+	return (
+		<form className="main-content sign-in-form" onSubmit={onSubmitHandler}>
 			<Logo
 				imgStyles={{ width: '3rem' }}
 				titleStyles={{ fontSize: '2rem' }}
@@ -93,7 +95,7 @@ const ForgotPassword = () => {
 						h1Style={
 							feedBack.isError
 								? { color: 'red' }
-								: { color: 'greed' }
+								: { color: 'green' }
 						}
 						pStyle={{ color: 'gray' }}
 					/>
