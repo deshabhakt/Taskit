@@ -13,6 +13,7 @@
     word-wrap: break-word;
     padding: 1rem;
     gap: 2px;
+    overflow: hidden;
 }
 
 
@@ -23,23 +24,22 @@
     font-weight: bolder;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     margin-bottom: 5px;
-    overflow: scroll;
     height: 2rem;
+    overflow-y:scroll;
 }
-
-::-webkit-scrollbar {
+.task-title::-webkit-scrollbar {
     display: none;
 }
 
 .task-description {
     flex: 1;
-    overflow: scroll;
+    overflow-y:scroll;
     text-align: justify;
     margin-bottom: 10px;
     min-height: 4rem;
 }
 
-::-webkit-scrollbar {
+.task-description::-webkit-scrollbar {
     display: none;
 }
 

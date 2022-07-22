@@ -1,0 +1,7 @@
+.contact__main-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.contact__form{}

@@ -11,7 +11,7 @@ import loadingGIF from '../../utils/Loading-Image/128x128.gif'
 
 import './SignIn.css'
 
-function SignIn({ signInHandler, isValidCreds }) {
+function SignIn({ signInHandler }) {
 	const [loginData, setLoginData] = useState({
 		email: '',
 		password: '',

@@ -6,13 +6,14 @@
     align-items: center;
     position: fixed;
     width: 100vw;
-    overflow-x:scroll;
     min-width: fit-content;
     flex: 1;
     margin-top: 0;
     z-index: 110;
     padding: 20px 10px 25px;
     gap:10px;
+    padding-right: 18px; /* Increase/decrease this value for cross-browser compatibility */
+    /* box-sizing: content-box; So the width will be 100% + 17px */
     }
 
     .menu-bar-icon {

@@ -1,17 +1,22 @@
+body{
+    /* overflow: hidden; */
+}
+
 .App {
     display: flex;
     flex-direction: column;
-    height: 100vh;
     position: relative;
+    height: 100vh;
     justify-content: flex-start;
+    
 }
 .main-content {
     margin-top: 4.5rem;
-    flex:1;
+    flex:1 1;
 }
 footer {
     text-align: center;
-    padding: 1rem;
+    padding: 5px;
 }
 
 footer a {
