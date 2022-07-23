@@ -106,8 +106,8 @@ function SignIn({ signInHandler }) {
 				<div className="sign-in-buttons-div">
 					<Button
 						className="btn btn-primary"
-						onClickHandler={()=>{
-							navigate("/signup",{replace:true})
+						onClickHandler={() => {
+							navigate('/signup', { replace: true })
 						}}
 					>
 						Sing Up
@@ -123,7 +123,7 @@ function SignIn({ signInHandler }) {
 			<div className="sign-up-form__validation_div">
 				{loadingState && (
 					<img
-						style={{ objectFit: 'contain', width: '90px' }}
+						style={{ objectFit: 'contain', width: '60px' }}
 						src={loadingGIF}
 						alt="loading gif"
 					/>

@@ -20,3 +20,8 @@
 .add-note-btn:active {
     background-color: deepskyblue;
 }
+@media screen and (max-width:600px) {
+    .add-note-btn {
+        right: 20px;
+    }
+}

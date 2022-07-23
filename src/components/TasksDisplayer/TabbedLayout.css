@@ -11,14 +11,14 @@
     align-items: center;
     height: 2.5rem;
 }
-.tabs__background-div{
+.tabs__background-div {
     position: fixed;
     height: 2.5rem;
     width: 100%;
     background-color: aquamarine;
     display: flex;
 }
-.tabs__background-div div{
+.tabs__background-div div {
     flex: 1;
 }
 .tabs-div div {
@@ -48,21 +48,22 @@
     justify-content: flex-start;
     align-content: flex-start;
     align-items: flex-start;
-    padding-bottom: 3rem;
+    padding-bottom: 5rem;
     }
 
-    @media screen and (max-width:600px) {
-        .tabbed-layout {
-          justify-content: space-around;
-        }
+@media screen and (max-width:600px) {
+    .tabbed-layout {
+        justify-content: space-around;
+    }
     }
 
-    .no-tasks-found-div {
-        margin-top: 15rem;
-        flex: 1;
-        justify-items: center;
-        align-self: center;
-        text-align: center;
-        color: gray;
-        font-weight: bolder;
+.no-tasks-found-div {
+    margin-top: 15rem;
+    flex: 1;
+    justify-items: center;
+    align-self: center;
+    text-align: center;
+    color: gray;
+    font-weight: bolder;
+    position: fixed;
 }

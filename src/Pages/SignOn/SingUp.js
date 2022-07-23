@@ -140,7 +140,7 @@ function SignUp() {
 			<div className="sign-up-form__validation_div">
 				{loadingState && (
 					<img
-						style={{ objectFit: 'contain', width: '90px' }}
+						style={{ objectFit: 'contain', width: '60px' }}
 						src={loadingGIF}
 						alt="loading gif"
 					/>
