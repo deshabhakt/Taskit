@@ -13,6 +13,7 @@ body{
 .main-content {
     margin-top: 4.5rem;
     flex:1 1;
+    padding-bottom: 5rem;
 }
 footer {
     text-align: center;
@@ -22,7 +23,7 @@ footer {
     width: 100%;
     background-color: transparent;
     position: fixed;
-    bottom:2px;
+    bottom: 0px;
     background-color: white;
 }
 
