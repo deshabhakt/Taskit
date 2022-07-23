@@ -23,21 +23,16 @@
 }
 .tabs-div div {
     flex: 1;
-    text-align: center;
     padding: 0.5rem;
-    font-weight: bolder;
     font-size: 1rem;
+    text-align: center;
+    font-weight: bolder;
 }
 
 .selected-tab {
     background-color: orange;
     border-radius: 4rem;
 }
-
-.not-selected-ongoing-tab {
-    border-bottom-right-radius: 2rem;
-}
-
 .tabbed-layout {
     margin-top: 2.5rem;
     display: flex;
@@ -52,18 +47,16 @@
 
 @media screen and (max-width:600px) {
     .tabbed-layout {
-        justify-content: space-around;
-    }
+            justify-content: space-around;
+        }
     }
 
 .no-tasks-found-div {
-    margin-top: 15rem;
-    flex: 1;
-    justify-items: center;
-    align-self: center;
-    text-align: center;
     color: gray;
     font-weight: bolder;
     position: fixed;
-    padding-bottom: 5rem;
+    text-align:center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

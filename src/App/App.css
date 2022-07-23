@@ -13,6 +13,7 @@ body{
 .main-content {
     margin-top: 4.5rem;
     flex:1 1;
+    padding-bottom: 2rem;
 }
 footer {
     text-align: center;

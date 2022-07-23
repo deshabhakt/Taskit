@@ -52,6 +52,7 @@ const CreateTaskModal = ({ taskCreateHandler }) => {
 					type="text"
 					value={newTask.title}
 					onChange={taskInputHandler}
+					placeholder='Task description'
 					autoFocus
 					required
 				/>
@@ -63,6 +64,7 @@ const CreateTaskModal = ({ taskCreateHandler }) => {
 					cols={30}
 					value={newTask.description}
 					onChange={taskInputHandler}
+					placeholder='Task description'
 				/>
 				<div className="task-completed-button">
 					<Button

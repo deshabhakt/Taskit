@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import forgotPassword from '../../components/API-CallHandler/Users-API/forgotPassword'
 
@@ -10,6 +10,8 @@ import loadingGIF from '../../utils/Loading-Image/128x128.gif'
 
 import './SignIn.css'
 import FormFeedback from '../../UI/FormFeedback/FormFeedback'
+import { useLocation } from 'react-router-dom'
+import queryStringParser from '../../utils/queryStringParser'
 
 const ForgotPassword = () => {
 	const [email, setEmail] = useState('')
@@ -19,6 +21,16 @@ const ForgotPassword = () => {
 		p: '',
 		isError: false,
 	})
+
+	const [isVerificationLinkExpired, setIsVerificationLinkExpired] = useState(false)
+
+	const location = useLocation().search
+	useEffect(()=>{
+		const queryParams = queryStringParser(location)
+		if(queryParams['resetToken']==='invalid'){
+			setIsVerificationLinkExpired(true)
+		}
+	},[])
 
 	const onSubmitHandler = (event) => {
 		event.preventDefault()
@@ -60,7 +72,7 @@ const ForgotPassword = () => {
 			/>
 			<Card>
 				<div className="div-title">
-					<h1>Reset Password</h1>
+					<h1 style={isVerificationLinkExpired?{color:'red'}:{}}>{!isVerificationLinkExpired? 'Reset Password' : 'Link Expired' }</h1>
 				</div>
 				<label htmlFor="email">Email</label>
 				<input

@@ -74,6 +74,7 @@ function SignUp() {
 				})
 			})
 			.catch((e) => {
+				// console.log(e)
 				setLoadingState(false)
 				setFeedBack({
 					p: '500 : Server Error',
@@ -151,7 +152,7 @@ function SignUp() {
 						h1Style={
 							feedBack.isError
 								? { color: 'red' }
-								: { color: 'greed' }
+								: { color: 'green' }
 						}
 						pStyle={{ color: 'gray' }}
 					/>

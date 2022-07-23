@@ -6,20 +6,13 @@ import Card from '../../UI/Card/Card'
 import Button from '../../UI/Button/Button'
 import FormFeedback from '../../UI/FormFeedback/FormFeedback'
 import resetPassword from '../../components/API-CallHandler/Users-API/resetPassword'
+import queryStringParser from '../../utils/queryStringParser'
 
 import loadingGIF from '../../utils/Loading-Image/128x128.gif'
 
 import './SignIn.css'
 
-const getQueryParamsFromQueryString = (queryString) => {
-	const queryParams = {}
-	const queryStringSplited = queryString.slice(1).split('&')
-	for (let i = 0; i < queryStringSplited.length; i++) {
-		const _strarr = queryStringSplited[i].split('=')
-		queryParams[_strarr[0]] = _strarr[1]
-	}
-	return queryParams
-}
+
 
 function ResetPassword() {
 	const [password, setPassword] = useState({
@@ -69,6 +62,13 @@ function ResetPassword() {
 		}
 		resetPassword(payload).then((res) => {
 			setLoadingState(false)
+			if(!res){
+				return setFeedBack({
+					h1: 'Something went wrong',
+					p: '',
+					isError: true,
+				})
+			}
 			if (res.data.error.message) {
 				return setFeedBack({
 					h1: res.data.error.message.h1,
@@ -83,20 +83,19 @@ function ResetPassword() {
 
 	const location = useLocation().search
 	useEffect(() => {
-		const params = getQueryParamsFromQueryString(location)
+		const params = queryStringParser(location)
 		if (!params.resetToken) {
 			return navigate('/signin')
 		}
 		if (params.resetToken === 'invalid') {
-			return navigate('/forgotpassword')
+			return navigate({path:'/forgotpassword',search:'?resetToken=invalid'})
 		}
 		setQueryParams(params)
-		// console.log(params)
 	}, [])
 
 	return (
 		<form
-			className="sign-in-form"
+			className="sign-in-form main-content"
 			onSubmit={(event) => {
 				onSubmitHandler(event)
 			}}

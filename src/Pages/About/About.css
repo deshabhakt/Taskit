@@ -1,10 +1,8 @@
 .about{
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     gap:0.7rem;
-    padding-bottom: 5rem;
-    padding-top: 5rem;
 }
 
 .about__app-logo{

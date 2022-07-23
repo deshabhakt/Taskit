@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     gap:3rem;
+    padding-bottom: 2rem;
 }
 
 .contact__description{
@@ -12,7 +13,7 @@
     max-width: 30rem;
     margin: 5%;
     font-family: cursive;
-    font-size: 1.7rem;
+    font-size: 1.5rem;
 }
 
 .contact__form{
@@ -25,14 +26,15 @@
 }
 
 .contact__card{
-    padding:2.5rem 2.5rem 1rem;
+    padding:1.5rem 1.5rem 1rem;
 }
 
 .contact__form h1{
     text-align: center;
     font-weight: 600;
     font-family: cursive;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
 }
 
 .contact__submit-button-div{

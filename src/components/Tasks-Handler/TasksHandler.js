@@ -35,13 +35,14 @@ function TasksHandler({ token }) {
 
 	const taskCreateHandler = (createdTask) => {
 		setIsCreateTask(false)
+		if (createdTask === undefined) {
+			
+			return
+		}
 		setErrorObject({
 			h1: '',
 			p: '',
 		})
-		if (createdTask === undefined) {
-			return
-		}
 		const newTask = {
 			...createdTask,
 			lastModifiedOn: getDateTimeStamp(),
@@ -153,9 +154,6 @@ function TasksHandler({ token }) {
 				p: '',
 			})
 		})
-
-
-
 	}
 	const tasksHandler = (tasks) => {
 		setTasks(tasks)
@@ -217,18 +215,16 @@ function TasksHandler({ token }) {
 				selectedTabHandler={selectedTabHandler}
 				selectedTab={selectedTab}
 			/>
-			<motion.button
+			<motion.div
 				initial={{ rotate: '45deg' }}
 				animate={{ rotate: '0deg' }}
-				transition={{ duration: 1 }}
-				whileHover={{
-					scale: 1.1,
-				}}
+				transition={{ duration: 0.4 }}
+				whileHover={{scale: 1.1}}
 				className="add-note-btn"
 				onClick={() => {
 					setIsCreateTask(true)
 				}}
-			>+</motion.button>
+			>+</motion.div>
 			{isCreateTask && (
 				<CreateTaskModal taskCreateHandler={taskCreateHandler} />
 			)}

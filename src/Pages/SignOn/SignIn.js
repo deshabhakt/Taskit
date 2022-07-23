@@ -47,7 +47,6 @@ function SignIn({ signInHandler }) {
 						isError: true,
 					})
 				}
-
 				const { authToken, userName, message, verificationStatus } =
 					res.data.success
 				if (!verificationStatus) {
@@ -134,7 +133,7 @@ function SignIn({ signInHandler }) {
 						h1Style={
 							feedBack.isError
 								? { color: 'red' }
-								: { color: 'greed' }
+								: { color: 'green' }
 						}
 						pStyle={{ color: 'gray' }}
 					/>
