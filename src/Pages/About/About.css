@@ -1,12 +1,15 @@
 .about{
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     gap:0.7rem;
+    padding-bottom: 5rem;
+    padding-top: 5rem;
 }
 
 .about__app-logo{
     margin-bottom: 1.5%;
+    margin-top: 2rem;
 }
 
 .about__app-info{
@@ -19,11 +22,15 @@
     text-align: center;
     }
 
+.about__headings {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    padding: 10px;
+}
+
 .about__app-info-description{
     word-break: keep-all;
     font-size: 1.2rem;
     font-family: cursive;
-    width: 35rem;
     padding:10px;
 }
 

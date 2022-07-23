@@ -39,9 +39,10 @@
     display: flex;
     margin: 5% 10% 2%;
 }
-@media screen and (max-width:600px) {
+@media screen and (max-width:1200px) {
     .contact__main-div {
-        padding: 10px;
+        padding: auto 10px 0px;
+        padding-bottom: 5rem;
     }
 
     .contact__card {

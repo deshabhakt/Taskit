@@ -41,6 +41,8 @@ const MenuBar = ({ loginState, logoutHandler, userName }) => {
 			<div className="menu-bar-log-in-span">
 				<p className="user-name">{userName && `Welcome ${userName}`}</p>
 				<div className={userName && 'username-separator-div'}></div>
+				{/* {loginState && <SignedIn />} */}
+				{/* {!loginState && ( */}
 				<Link
 					to={
 						logOnText === 'Sign In'
@@ -56,10 +58,23 @@ const MenuBar = ({ loginState, logoutHandler, userName }) => {
 						}
 					}}
 				>
-					{loginState ? 'Sign Out' : logOnText}
+					{loginState
+						? // <SignedIn />
+						  'Sign Out'
+						: logOnText}
 				</Link>
+				{/* )} */}
 			</div>
 		</nav>
+	)
+}
+
+const SignedIn = () => {
+	return (
+		<div>
+			<img />
+			<img />
+		</div>
 	)
 }
 
