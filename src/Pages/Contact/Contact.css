@@ -1,9 +1,10 @@
 .contact__main-div{
     display: flex;
     flex-direction: row;
+    flex-wrap:wrap;
     justify-content: center;
     align-items: center;
-    gap:4rem;
+    gap:3rem;
 }
 
 .contact__description{
@@ -37,4 +38,13 @@
 .contact__submit-button-div{
     display: flex;
     margin: 5% 10% 2%;
+}
+@media screen and (max-width:600px) {
+    .contact__main-div {
+        padding: 10px;
+    }
+
+    .contact__card {
+        padding: 1.5rem 1.5rem 1rem;
+    }
 }
