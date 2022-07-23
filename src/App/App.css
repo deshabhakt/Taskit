@@ -20,8 +20,10 @@ footer {
     z-index: 9;
     margin: auto;
     width: 100%;
-    margin-top: 2rem;
     background-color: transparent;
+    position: fixed;
+    bottom:2px;
+    background-color: white;
 }
 
 footer a {
