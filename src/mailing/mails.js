@@ -9,6 +9,7 @@ const verificationMail = (name, verificationLink) => {
 					<br />
 					click on below link to verify your email-address.
 				</h2>
+				<link>${verificationLink}</link>
 				<a herf=${verificationLink}>click here</a>
 				<h3>Regards,<br/>Team Task!t</h3>
 			</div>`,
@@ -32,6 +33,7 @@ const resetPasswordVerificationMail = (name, verificationLink) => {
 		body: `<div>
 				<h1>Hey ${name},</h1>
 				<h2>To reset password click on below link</h2>
+				<link>${verificationLink}</link>
 				<a herf=${verificationLink}>click here</a>
 				<h3>Regards,<br/>Team Task!t</h3>
 			</div>`,
