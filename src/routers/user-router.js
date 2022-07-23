@@ -432,7 +432,7 @@ userRouter.post('/users/login', async (req, res) => {
 				process.env.URL + `/verify?email=${user.email}&token=${token}`
 
 			const email = verificationMail(user.name, verificationLink)
-			sendMail(user.email, email.subject, email.body)
+			await sendMail(user.email, email.subject, email.body)
 			// // console.log(user)
 			return res.send({
 				error: {

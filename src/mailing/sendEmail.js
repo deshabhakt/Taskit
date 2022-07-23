@@ -31,7 +31,7 @@ module.exports = async (email, subject, html) => {
 			subject: subject,
 			html: html,
 		}
-		// console.log('sendingConfig', sendingConfig)
+		console.log('sendingConfig', sendingConfig)
 		await transporter.sendMail(sendingConfig)
 		console.log('email sent successfully')
 	} catch (e) {

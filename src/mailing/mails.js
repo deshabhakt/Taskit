@@ -1,6 +1,6 @@
 const verificationMail = (name, verificationLink) => {
 	return {
-		subject: 'Email verification required',
+		subject: 'Task!t | Email verification required',
 		body: `<div>
 				<h1>Hey ${name}, Welcome to ToDo List</h1>
 				<p>
@@ -9,7 +9,7 @@ const verificationMail = (name, verificationLink) => {
 					<br />
 					click on below link to verify your email-address.
 				</p>
-				<link>${verificationLink}</link>
+				<a href=${verificationLink}>click here</a>
 				<h2>Regards,<br/>Team Task!t</h2>
 			</div>`,
 	}
@@ -17,7 +17,7 @@ const verificationMail = (name, verificationLink) => {
 
 const verificationSuccessMail = (name) => {
 	return {
-		subject: 'Email verified Successfully',
+		subject: 'Task!t | Email verified Successfully',
 		body: `<div>
 				<h1>Hey ${name},</h1>
 				<p>Your Mail has been verified successfully.</p>
@@ -28,11 +28,11 @@ const verificationSuccessMail = (name) => {
 
 const resetPasswordVerificationMail = (name, verificationLink) => {
 	return {
-		subject: 'Reset Password',
+		subject: 'Task!t | Reset Password',
 		body: `<div>
 				<h1>Hey ${name},</h1>
 				<p>To reset password click on below link</p>
-				<link>${verificationLink}</link>
+				<a href=${verificationLink}>click here</a>
 				<h2>Regards,<br/>Team Task!t</h2>
 			</div>`,
 	}
@@ -40,12 +40,12 @@ const resetPasswordVerificationMail = (name, verificationLink) => {
 
 const passwordChangeMail = (name, loginLink) => {
 	return {
-		subject: 'Reset Password',
+		subject: 'Task!t | Password reset successfully',
 		body: `<div>
 				<h1>Hey ${name},</h1>
 				<p>Your password has been reset successfully.<br/>login using below link
 				</p>
-				<link>${loginLink}</link>
+				<a href=${loginLink}>click here</a>
 				<h2>Regards,<br/>Team Task!t</h2>
 			</div>`,
 	}
