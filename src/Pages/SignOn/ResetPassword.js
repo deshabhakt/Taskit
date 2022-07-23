@@ -77,7 +77,7 @@ function ResetPassword() {
 				})
 			}
 
-			return navigate('/signin')
+			return navigate({path:'/signin',search:'?passwordreset=success'})
 		})
 	}
 

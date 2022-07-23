@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import Logo from '../../UI/Logo/Logo'
 import Card from '../../UI/Card/Card'
@@ -10,8 +10,28 @@ import FormFeedback from '../../UI/FormFeedback/FormFeedback'
 import loadingGIF from '../../utils/Loading-Image/128x128.gif'
 
 import './SignIn.css'
+import queryStringParser from '../../utils/queryStringParser'
 
 function SignIn({ signInHandler }) {
+
+	// handling redirection from password reset page
+
+	const location = useLocation().search
+	console.log(location)
+	const [isRedirectedFromPasswordResetPage, setIsRedirectedFromPasswordResetPage] = useState(false)
+	useEffect(()=>{
+		const queryParams = queryStringParser(location)
+		console.log(queryParams)
+		if(queryParams['passwordreset']==='success'){
+			setIsRedirectedFromPasswordResetPage(true)
+		}
+	})
+
+
+
+	// finished handling redirection from password reset page
+
+
 	const [loginData, setLoginData] = useState({
 		email: '',
 		password: '',
@@ -83,6 +103,7 @@ function SignIn({ signInHandler }) {
 			<Card>
 				<div className="div-title">
 					<h1>Sign In</h1>
+					{isRedirectedFromPasswordResetPage&&<p style={{color:'green'}}>Password reset successfully.</p>}
 				</div>
 				<label htmlFor="email">Email</label>
 				<input
