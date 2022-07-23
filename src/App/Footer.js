@@ -3,11 +3,18 @@ import React from 'react'
 import './App.css'
 
 const Footer = () => {
-	const year = new Date().getFullYear()
+
+	const basedYear = 2022
+
+	const currentYear = new Date().getFullYear()
+
 	const devName = 'Deshabhakt Gavali'
 	return (
 		<footer>
-			&copy; {year} :{' '}
+			&copy;{' '}
+			{basedYear === currentYear
+				? currentYear + ' '
+				: basedYear + '-' + currentYear + ' '}
 			<a
 				className="footer-a-tag"
 				href="https://www.github.com/deshabhakt"
