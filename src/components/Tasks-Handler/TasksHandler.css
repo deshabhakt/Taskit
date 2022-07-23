@@ -8,9 +8,8 @@
     font-size: 2rem;
     color: rgb(251, 255, 0);
     background-color: rgb(33, 136, 34);
-    align-self: flex-end;
-    margin-top: 95vh;
-    margin-right: 3vw;
+    right: 10px;
+    bottom: 10px;
 }
 
 .add-note-btn:hover {
