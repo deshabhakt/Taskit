@@ -19,6 +19,9 @@ const auth = require('../middleware/authentication')
 // importing uploadAvatarValidator middleware for validating fileuploads
 const uploadAvatarValidator = require('../middleware/uploadAvatarValidator')
 
+
+const bcrypt = require('bcryptjs')
+
 // mailing helpers
 const {
 	verificationMail,
@@ -172,8 +175,8 @@ userRouter.get('/reset-password-token-validation', async (req, res) => {
 			})
 		}
 		const isTokenValid = user.verificationToken === verificationToken
-		if (!verificationToken) {
-			user.verificationToken = 'invalid'
+		// console.log(user.verificationToken, '\n', verificationToken)
+		if (!isTokenValid) {
 			await user.save()
 			return res.redirect(
 				process.env.FRONTEND_URL +
@@ -182,6 +185,7 @@ userRouter.get('/reset-password-token-validation', async (req, res) => {
 		}
 		user.verificationToken = 'valid'
 		await user.save()
+		// console.log(user)
 		res.redirect(
 			process.env.FRONTEND_URL +
 				`/resetpassword?email=${email}&resetToken=valid`
@@ -221,9 +225,30 @@ userRouter.patch('/resetpassword', async (req, res) => {
 				process.env.FRONTEND_URL + '/forgotpassword?resetToken=invalid'
 			)
 		}
+
+		const isNewPasswordSameAsPreviousPassword = await bcrypt.compare(
+			newPassword,
+			user.password
+		)
+		if (isNewPasswordSameAsPreviousPassword) {
+			return res.send({
+				error: {
+					message: {
+						h1: 'New password cannot be same as old password',
+						p: '',
+					},
+					status: 400,
+				},
+				success: {},
+			})
+		}
+
 		if (!user.verified) {
 			user.verified = true
 		}
+
+		user.verificationToken = '' + Math.random()
+
 		user.password = newPassword
 		await user.save()
 
@@ -247,7 +272,7 @@ userRouter.patch('/resetpassword', async (req, res) => {
 			error: {
 				message: {
 					h1: 'Something went wrong...',
-					p: '',
+					p: '500 | Server error',
 				},
 				status: 404,
 			},
@@ -301,7 +326,7 @@ userRouter.get('/verify', async (req, res) => {
 		}
 
 		user.verified = true
-		user.verificationToken = ''
+		user.verificationToken = '' + Math.random()
 
 		await user.save()
 
@@ -420,6 +445,8 @@ userRouter.delete('/users/me', auth, async (req, res) => {
 // route for logging in user
 userRouter.post('/users/login', async (req, res) => {
 	try {
+		// console.log(req.body)
+
 		const user = await User.findByCredentials(
 			req.body.email,
 			req.body.password
