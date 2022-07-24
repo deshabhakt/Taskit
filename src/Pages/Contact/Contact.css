@@ -45,6 +45,7 @@
     .contact__main-div {
         padding: auto 10px 0px;
         padding-bottom: 5rem;
+        gap:1rem
     }
 
     .contact__card {
