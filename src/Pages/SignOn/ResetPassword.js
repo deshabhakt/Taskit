@@ -48,12 +48,11 @@ function ResetPassword() {
 	const onSubmitHandler = (event) => {
 		event.preventDefault()
 		if (password.password1 !== password.password2) {
-			setFeedBack({
+			return setFeedBack({
 				h1: 'Both passwords should be same',
 				p: '',
 				isError: true,
 			})
-			return
 		}
 		setLoadingState(true)
 		const payload = {
@@ -61,8 +60,9 @@ function ResetPassword() {
 			email: queryParams.email,
 		}
 		resetPassword(payload).then((res) => {
+			console.log(res)
 			setLoadingState(false)
-			if(!res){
+			if (!res) {
 				return setFeedBack({
 					h1: 'Something went wrong',
 					p: '',
@@ -76,8 +76,7 @@ function ResetPassword() {
 					isError: true,
 				})
 			}
-
-			return navigate({path:'/signin',search:'?passwordreset=success'})
+			return navigate('/signin?passwordreset=success')
 		})
 	}
 
@@ -88,7 +87,7 @@ function ResetPassword() {
 			return navigate('/signin')
 		}
 		if (params.resetToken === 'invalid') {
-			return navigate({path:'/forgotpassword',search:'?resetToken=invalid'})
+			return navigate('/forgotpassword?resetToken=invalid')
 		}
 		setQueryParams(params)
 	}, [])
