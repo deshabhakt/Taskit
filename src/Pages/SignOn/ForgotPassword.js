@@ -34,6 +34,7 @@ const ForgotPassword = () => {
 
 	const onSubmitHandler = (event) => {
 		event.preventDefault()
+		setIsVerificationLinkExpired(false)
 		setLoadingState(true)
 		forgotPassword({ email })
 			.then((res) => {
