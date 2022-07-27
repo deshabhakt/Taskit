@@ -1,4 +1,4 @@
-// require('dotenv').config()
+require('dotenv').config()
 // importing express and initializing express-app
 const express = require('express')
 const app = express()

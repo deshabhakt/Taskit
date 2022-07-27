@@ -37,18 +37,18 @@ taskRouter.post('/tasks', auth, async (req, res) => {
 
 		await newTask.save()
 		res.status(201).send({
-			errorMessage: undefined,
-			message: 'Task created successfylly',
+			error: undefined,
+			success: { message: 'Task created successfylly' },
 		})
 	} catch (e) {
 		res.send({
-			errorMessage: {
+			error: {
 				message: {
 					h1: 'Task not created',
 					p: '500 | Server Error',
 				},
-				error: e,
 			},
+			success: undefined,
 		})
 	}
 })
@@ -86,37 +86,37 @@ taskRouter.get('/tasks', auth, async (req, res) => {
 				sort,
 			},
 		})
-		const data = req.user.tasks
+		const allTasks = req.user.tasks
 		// console.log(data)
 		// // alternative to above code is
 		// await req.user.populate('tasks').execPopulate()
 		// // both the above lines work same
 
-		if (!data || data.length === 0) {
+		if (!allTasks || allTasks.length === 0) {
 			return res.send({
-				errorMessage: {
+				error: {
 					message: {
 						h1: 'No Tasks Found',
 						p: 'Start adding by clicking on + button',
 					},
 				},
-				tasks: [],
+				success: undefined,
 			})
 		}
 
 		res.send({
-			errorMessage: undefined,
-			tasks: data,
+			error: undefined,
+			success: { data: allTasks },
 		})
 	} catch (e) {
 		res.send({
-			errorMessage: {
+			error: {
 				message: {
 					h1: 'Something went wrong...',
 					p: '500 | Server Error',
 				},
-				error: e,
 			},
+			success: undefined,
 		})
 	}
 })
@@ -125,8 +125,8 @@ taskRouter.get('/tasks', auth, async (req, res) => {
 taskRouter.get('/tasks/:id', auth, async (req, res) => {
 	try {
 		const _id = req.params.id
-		const data = await Task.findOne({ _id, owner: req.user._id })
-		if (!data) {
+		const task = await Task.findOne({ _id, owner: req.user._id })
+		if (!task) {
 			return res.send({
 				errorMessage: {
 					message: {
@@ -134,22 +134,22 @@ taskRouter.get('/tasks/:id', auth, async (req, res) => {
 						p: '404 | NOT FOUND',
 					},
 				},
-				task: {},
+				success: undefined,
 			})
 		}
 		res.send({
-			errorMessage: undefined,
-			task: data,
+			error: undefined,
+			success: { data: task },
 		})
 	} catch (e) {
 		res.send({
-			errorMessage: {
+			error: {
 				message: {
 					h1: 'Something went wrong',
 					p: '404 | NOT FOUND',
 				},
-				error: e,
 			},
+			success: undefined,
 		})
 	}
 })
@@ -171,12 +171,13 @@ taskRouter.patch('/tasks/:id', auth, async (req, res) => {
 	if (!isValid) {
 		return res.send(
 			res.send({
-				errorMessage: {
+				error: {
 					message: {
 						h1: 'Invalid update',
 						p: '400 | Bad Request',
 					},
 				},
+				success: undefined,
 			})
 		)
 	}
@@ -195,12 +196,13 @@ taskRouter.patch('/tasks/:id', auth, async (req, res) => {
 		})
 		if (!task) {
 			return res.send({
-				errorMessage: {
+				error: {
 					message: {
 						h1: 'Task Not found',
 						p: '400 | Bad Request',
 					},
 				},
+				success: undefined,
 			})
 		}
 
@@ -211,18 +213,18 @@ taskRouter.patch('/tasks/:id', auth, async (req, res) => {
 		await task.save()
 
 		res.send({
-			errorMessage: undefined,
-			data: task,
+			error: undefined,
+			success: { data: task },
 		})
 	} catch (e) {
 		res.send({
-			errorMessage: {
+			error: {
 				message: {
 					h1: 'Unable to update task',
 					p: '500 | Server Error',
 				},
 			},
-			error: e,
+			success: undefined,
 		})
 	}
 })
@@ -244,21 +246,105 @@ taskRouter.delete('/tasks/:id', auth, async (req, res) => {
 		await task.remove()
 
 		res.send({
-			errorMessage: undefined,
-			data: task,
+			error: undefined,
+			success: {
+				data: task,
+			},
 		})
 	} catch (e) {
 		res.send({
-			errorMessage: {
+			error: {
 				message: {
-					h1: 'Unable to update task',
+					h1: 'Unable to delete task',
 					p: '500 | Server Error',
 				},
 			},
-			error: e,
+			success: undefined,
 		})
 	}
 })
+
+taskRouter.get('/get-number-of-tasks', auth, async (req, res) => {
+	try {
+		const lengths = { complete: 0, inComplete: 0, all: 0 }
+		lengths.complete = await Task.count({
+			owner: req.user._id,
+			completed: true,
+		})
+		lengths.inComplete = await Task.count({
+			owner: req.user._id,
+			completed: false,
+		})
+
+		lengths.all = lengths.complete + lengths.inComplete
+
+		res.send({
+			error: undefined,
+			success: { data: lengths },
+		})
+	} catch (e) {
+		console.log(e)
+		res.send({
+			error: {
+				message: {
+					h1: 'Something went wrong',
+					p: '',
+				},
+				error: e,
+			},
+			success: undefined,
+		})
+	}
+})
+
+taskRouter.delete(
+	'/tasks/delete-by-category/:categoryOfTaskSToBeDeleted',
+	auth,
+	async (req, res) => {
+		try {
+			const categoryOfTaskSToBeDeleted =
+				req.params.categoryOfTaskSToBeDeleted
+			console.log(categoryOfTaskSToBeDeleted)
+			if (categoryOfTaskSToBeDeleted === 'complete-tasks') {
+				await Task.deleteMany({ owner: req.user._id, completed: true })
+				return res.send({
+					error: undefined,
+					success: { message: 'Complete tasks delete successfully.' },
+				})
+			}
+			if (categoryOfTaskSToBeDeleted === 'incomplete-tasks') {
+				await Task.deleteMany({ owner: req.user._id, completed: false })
+				return res.send({
+					error: undefined,
+					success: {
+						message: 'In-complete tasks delete successfully.',
+					},
+				})
+			}
+			if (categoryOfTaskSToBeDeleted === 'all-tasks') {
+				await Task.deleteMany({ owner: req.user._id })
+				return res.send({
+					error: undefined,
+					success: { message: 'All tasks delete successfully.' },
+				})
+			}
+		} catch (error) {
+			console.log(error)
+			res.send({
+				error: {
+					message: {
+						h1: 'Something went wrong',
+						p: '',
+					},
+					error,
+				},
+				success: {},
+			})
+		}
+	}
+)
+	
+
 
 // // dummy routes
 

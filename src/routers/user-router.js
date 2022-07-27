@@ -19,7 +19,6 @@ const auth = require('../middleware/authentication')
 // importing uploadAvatarValidator middleware for validating fileuploads
 const uploadAvatarValidator = require('../middleware/uploadAvatarValidator')
 
-
 const bcrypt = require('bcryptjs')
 
 // mailing helpers
@@ -434,11 +433,17 @@ userRouter.delete('/users/me', auth, async (req, res) => {
 
 		await user.remove()
 		res.send({
-			message: 'User deleted successfully.',
-			data: req.user,
+			error: undefined,
+			success: {
+				message: 'User deleted successfully.',
+			},
 		})
 	} catch (e) {
-		res.status(400).send(e)
+		console.log(e)
+		res.send({
+			error: { message: 'Something went wrong', error: e },
+			success: undefined,
+		})
 	}
 })
 
