@@ -165,7 +165,7 @@ function TasksHandler({ token }) {
 		setLoadingState(true)
 		await fetchTasks(selectedTab, token).then((res) => {
 			setLoadingState(false)
-			console.log(res)
+			// console.log(res)
 			if (!res.data) {
 				return setErrorObject({
 					h1: 'Something went wrong',
