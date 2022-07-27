@@ -68,6 +68,28 @@
     color: rgb(37, 211, 159);
 }
 
+.signed-in__main-div {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.signed-in__img-setting {
+    object-fit: contain;
+    width: 1.8rem;
+}
+
+.signed-in__img-sign-out {
+    object-fit: contain;
+    width: 1.4rem;
+}
+
+.signed-in__img-setting:hover,
+.signed-in__img-sign-out:hover {
+    scale: 1.2;
+    transition: 300ms;
+}
 @media screen and (max-width:500px) {
 
     .menu-bar * {
@@ -78,32 +100,31 @@
     .menu-bar-link {
         padding: 2px;
     }
-    .menu-bar-log-in-span{
+.menu-bar-log-in-span {
         padding-right: 4px;
-        gap:5px;
+        gap: 5px;
     }
-    .username-separator-div{
-        height:2rem;
+.username-separator-div {
+    height: 2rem;
     }
-    .menubar-logo__menu-bar-icon img{
+.menubar-logo__menu-bar-icon img {
         width: 1.7rem;
         object-fit: cover;
     }
-    .menubar-logo__menu-bar-icon h1{
+.menubar-logo__menu-bar-icon h1 {
         font-size: 0.7rem;
     }
-}
-.signed-in__main-div {
-    display: flex;
-    gap: 0.8rem;
-}
+    .signed-in__main-div {
+        flex-direction: column;
+        gap:4px;
+        }
+    .signed-in__img-setting {
+        object-fit: contain;
+        width: 1.8rem;
+    }
 
-.signed-in__imgs {
-    object-fit: 'cover';
-    width: 1.8rem;
-}
-
-.signed-in__imgs:hover {
-    scale: 1.2;
-    transition: 300ms;
+    .signed-in__img-sign-out {
+        object-fit: contain;
+        width: 1.4rem;
+    }
 }

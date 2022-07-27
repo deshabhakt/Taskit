@@ -72,7 +72,7 @@ const SignedIn = ({ logOutHandler }) => {
 	return (
 		<div className="signed-in__main-div">
 			<img
-				className="signed-in__imgs"
+				className="signed-in__img-setting"
 				src={userSettingsIcon}
 				alt={'settings icon'}
 				onClick={() => {
@@ -80,7 +80,7 @@ const SignedIn = ({ logOutHandler }) => {
 				}}
 			/>
 			<img
-				className="signed-in__imgs"
+				className="signed-in__img-sign-out"
 				src={logOutIcon}
 				alt={'singout icon'}
 				onClick={() => {
