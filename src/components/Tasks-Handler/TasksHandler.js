@@ -36,7 +36,6 @@ function TasksHandler({ token }) {
 	const taskCreateHandler = (createdTask) => {
 		setIsCreateTask(false)
 		if (createdTask === undefined) {
-			
 			return
 		}
 		setErrorObject({
@@ -50,14 +49,16 @@ function TasksHandler({ token }) {
 		}
 
 		// API call for storing task in database
-		createTask(newTask, token).then(()=>{
-			fetchTasksHelper()
-		}).catch((e) => {
-			setErrorObject({
-				h1: 'Something went Wrong',
-				p: '',
+		createTask(newTask, token)
+			.then(() => {
+				fetchTasksHelper()
 			})
-		})
+			.catch((e) => {
+				setErrorObject({
+					h1: 'Something went Wrong',
+					p: '',
+				})
+			})
 	}
 
 	const selectedTabHandler = (tab) => {
@@ -116,16 +117,16 @@ function TasksHandler({ token }) {
 				return element
 			})
 			if (prev) {
-
 				return {
 					...prev,
 					[selectedTab]: [editedTask, ...filteredTasks],
 				}
 			}
-			const nonSelectedTab = selectedTab === 'ongoing' ? 'ongoing' : 'complete'
+			const nonSelectedTab =
+				selectedTab === 'ongoing' ? 'ongoing' : 'complete'
 			return {
 				[selectedTab]: [editedTask, ...filteredTasks],
-				[nonSelectedTab]: []
+				[nonSelectedTab]: [],
 			}
 		})
 
@@ -143,7 +144,9 @@ function TasksHandler({ token }) {
 		setTasks((prev) => {
 			return {
 				...prev,
-				[selectedTab]: prev[selectedTab].filter((ele) => ele._id !== id)
+				[selectedTab]: prev[selectedTab].filter(
+					(ele) => ele._id !== id
+				),
 			}
 		})
 		// API call for deleting task from database
@@ -162,18 +165,18 @@ function TasksHandler({ token }) {
 		setLoadingState(true)
 		await fetchTasks(selectedTab, token).then((res) => {
 			setLoadingState(false)
-			// console.log(res)
+			console.log(res)
 			if (!res.data) {
 				return setErrorObject({
 					h1: 'Something went wrong',
 					p: '500 | Unable to connect to server',
 				})
 			}
-			if (res.data.errorMessage) {
-				setErrorObject({ ...res.data.errorMessage.message })
+			if (res.data.error) {
+				setErrorObject({ ...res.data.error.message, isError: true })
 				return tasksHandler([])
 			} else {
-				const fetchedTasks = res.data.tasks
+				const fetchedTasks = res.data.success.data
 				const ongoing = fetchedTasks.filter((ele, idx) => {
 					return ele.completed === false
 				})
@@ -219,12 +222,14 @@ function TasksHandler({ token }) {
 				initial={{ rotate: '45deg' }}
 				animate={{ rotate: '0deg' }}
 				transition={{ duration: 0.4 }}
-				whileHover={{scale: 1.1}}
+				whileHover={{ scale: 1.1 }}
 				className="add-note-btn"
 				onClick={() => {
 					setIsCreateTask(true)
 				}}
-			>+</motion.div>
+			>
+				+
+			</motion.div>
 			{isCreateTask && (
 				<CreateTaskModal taskCreateHandler={taskCreateHandler} />
 			)}

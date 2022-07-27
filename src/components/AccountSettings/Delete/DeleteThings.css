@@ -1,0 +1,60 @@
+.delete-things__main-div {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 2rem 1rem 2rem 2rem;
+    gap: 2rem;
+}
+
+.delete-things__item-to-be-deleted {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.delete-things__item-holder-div-1 {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.delete-things__item-holder-div-1 div {
+    align-content: center;
+    width: 100%;
+    min-width: max-content;
+}
+
+.delete-things__item-to-be-delete-btn {
+    padding: 0.8rem 3rem;
+    height: 3.5rem;
+    align-self: center;
+    max-width: 8rem;
+}
+
+.delete-things__confirmation-div {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;
+    gap: 1rem;
+    background-color: burlywood;
+    border-radius: 2rem;
+}
+
+.delete-things__confirmation-div>div {
+    display: flex;
+    gap: 2rem;
+}
+
+.delete-things__confirmation-btn-no {
+    flex: 5;
+}
+
+.delete-things__confirmation-btn-yes {
+    flex: 1;
+}
+
+.delete-things__main-div h1 {
+    font-family: sans-serif;
+    font-weight: 500;
+    font-size: 1.5rem;
+}

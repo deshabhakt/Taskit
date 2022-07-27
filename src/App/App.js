@@ -2,7 +2,13 @@ import './App.css'
 
 import React, { useState, useEffect } from 'react'
 
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import {
+	BrowserRouter,
+	Navigate,
+	Route,
+	Routes,
+	useNavigate,
+} from 'react-router-dom'
 
 import MenuBar from '../components/MenuBar/MenuBar'
 
@@ -15,6 +21,7 @@ import SignUp from '../Pages/SignOn/SingUp'
 import { ForgotPassword } from '../Pages/SignOn/ForgotPassword'
 import ResetPassword from '../Pages/SignOn/ResetPassword'
 import Footer from './Footer'
+import Settings from '../Pages/Settings/Settings'
 
 // importing user related API calls handlers
 
@@ -98,11 +105,31 @@ function App() {
 				/>
 				<Route path="/forgotpassword" element={<ForgotPassword />} />
 				<Route path="/resetpassword" element={<ResetPassword />} />
+				{isLoggedIn && (
+					<>
+						<Route
+							path="/account_settings"
+							element={<Settings token={authToken} />}
+						/>
+						<Route
+							path="/logout"
+							element={<Logout logoutHandler={logoutHandler} />}
+						/>
+					</>
+				)}
 			</Routes>
-
 			<Footer />
 		</BrowserRouter>
 	)
+}
+
+const Logout = ({ logoutHandler }) => {
+	const navigate = useNavigate()
+	useEffect(() => {
+		logoutHandler()
+		navigate('/signin')
+	}, [])
+	return <></>
 }
 
 export default App

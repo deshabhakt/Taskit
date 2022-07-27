@@ -1,0 +1,85 @@
+.my-profile__main-div {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    flex: 1 1;
+    align-items: center;
+}
+
+.my-profile__main-div>div {
+    align-self: center;
+}
+
+.my-profile__user-info-title {
+    text-align: center;
+    margin-top: 2rem;
+    font-weight: bolder;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(108, 101, 46);
+    min-width: 25rem;
+}
+
+.my-profile__labels {
+    display: block;
+    font-size: 1rem;
+}
+
+.my-profile__user-info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 2rem;
+    justify-self: center;
+    align-items: center;
+    gap: 2rem;
+    justify-content: space-around;
+}
+
+
+.my-profile__user-info input {
+    margin-left: -0.5rem;
+    padding-left: 0.5rem;
+    display: block;
+}
+
+.my-profile__user-info input {
+    font-size: 1.5rem;
+    margin-top: 0.2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    max-width: 25rem;
+}
+
+.my-profile__user-info h1 {
+    font-size: 1.5rem;
+    margin-top: 0.3rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.5rem;
+    font-weight: bolder;
+    min-width: 21rem;
+}
+
+
+.my-profile__buttons-div {
+    display: flex;
+    gap: 2rem;
+    padding: 0 2rem 0 1rem;
+    align-items: center;
+}
+
+.my-profile__button {
+    flex: 1;
+    color: whitesmoke;
+    padding: 1rem 5rem;
+}
+
+.my-profile__button-edit-inactive,
+.my-profile__button-edit-active {
+    background-color: rgb(141, 67, 0);
+}
+
+.my-profile__button-edit-active:hover,
+.my-profile__button-edit-inactive:hover {
+    background-color: rgb(19, 6, 165);
+    transition: 300ms;
+}

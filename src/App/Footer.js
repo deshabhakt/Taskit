@@ -1,8 +1,10 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 
 import './App.css'
 
 const Footer = () => {
+	const location = useLocation().pathname
 
 	const basedYear = 2022
 
@@ -10,7 +12,13 @@ const Footer = () => {
 
 	const devName = 'Deshabhakt Gavali'
 	return (
-		<footer>
+		<footer
+			style={
+				location === '/account_settings'
+					? { backgroundColor: 'transparent' }
+					: {}
+			}
+		>
 			&copy;{' '}
 			{basedYear === currentYear
 				? currentYear + ' '

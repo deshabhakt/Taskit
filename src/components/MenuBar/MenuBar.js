@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import Logo from '../../UI/Logo/Logo'
+
+import logOutIcon from '../../utils/images/singout.png'
+import userSettingsIcon from '../../utils/images/setting.png'
 
 import './MenuBar.css'
 
@@ -41,39 +44,50 @@ const MenuBar = ({ loginState, logoutHandler, userName }) => {
 			<div className="menu-bar-log-in-span">
 				<p className="user-name">{userName && `Welcome ${userName}`}</p>
 				<div className={userName && 'username-separator-div'}></div>
-				{/* {loginState && <SignedIn />} */}
-				{/* {!loginState && ( */}
-				<Link
-					to={
-						logOnText === 'Sign In'
-							? '/signin'
-							: logOnText === 'Sign Up'
-							? '/signup'
-							: '/signin'
-					}
-					className="logonhandler"
-					onClick={() => {
-						if (loginState) {
-							logoutHandler()
+				{!loginState && (
+					<Link
+						to={
+							logOnText === 'Sign In'
+								? '/signin'
+								: logOnText === 'Sign Up'
+								? '/signup'
+								: '/signin'
 						}
-					}}
-				>
-					{loginState
-						? // <SignedIn />
-						  'Sign Out'
-						: logOnText}
-				</Link>
-				{/* )} */}
+						className="logonhandler"
+					>
+						{logOnText}
+					</Link>
+				)}
+				{loginState && (
+					//   'Sign Out'
+					<SignedIn logOutHandler={logoutHandler} />
+				)}
 			</div>
 		</nav>
 	)
 }
 
-const SignedIn = () => {
+const SignedIn = ({ logOutHandler }) => {
+	const navigate = useNavigate()
 	return (
-		<div>
-			<img />
-			<img />
+		<div className="signed-in__main-div">
+			<img
+				className="signed-in__imgs"
+				src={userSettingsIcon}
+				alt={'settings icon'}
+				onClick={() => {
+					navigate('/account_settings')
+				}}
+			/>
+			<img
+				className="signed-in__imgs"
+				src={logOutIcon}
+				alt={'singout icon'}
+				onClick={() => {
+					logOutHandler()
+					navigate('/signin')
+				}}
+			/>
 		</div>
 	)
 }

@@ -7,7 +7,6 @@ import FormFeedback from '../../UI/FormFeedback/FormFeedback'
 import './Contact.css'
 
 function Contact() {
-
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
@@ -16,18 +15,23 @@ function Contact() {
 
 	const [feedBack, setFeedBack] = useState({
 		h1: '',
-		p: ''
+		p: '',
 	})
 
 	const formInputChangeHandler = (event) => {
 		const target = event.target.name
 		const value = event.taget.value
-		setFormData(prev => { return { ...prev, [target]: value } })
+		setFormData((prev) => {
+			return { ...prev, [target]: value }
+		})
 	}
 
 	const formSubmitHandler = (event) => {
 		event.preventDefault()
-		setFeedBack({ h1: 'Thanks for your valueable feedback', p: 'We will get back to you ASAP' })
+		setFeedBack({
+			h1: 'Thanks for your valueable feedback',
+			p: 'We will get back to you ASAP',
+		})
 	}
 
 	return (
